@@ -11,6 +11,6 @@
     "href": "index.html",
     "title": "Hello World devconf 2025",
     "section": "",
-    "text": "This is a Quarto website hosted on GitHub Pages."
+    "text": "This is a Quarto website hosted on GitHub Pages.\nThat source files are in the demo_website/ folder."
   }
 ]
