@@ -1,0 +1,7 @@
+project:
+  output-dir: docs/slides/web/
+  render:
+  - index.qmd
+
+execute:
+  freeze: true

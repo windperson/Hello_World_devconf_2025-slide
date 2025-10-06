@@ -1,0 +1,10 @@
+project:
+  output-dir: docs/slides/
+  render:
+  - index.qmd
+
+profile:
+  default: webslide
+
+# picture url prefix
+part1_img_prefix: "./01_Tool_Setup/"

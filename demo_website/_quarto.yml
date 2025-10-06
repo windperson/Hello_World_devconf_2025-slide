@@ -3,19 +3,16 @@ project:
 
 website:
   title: "Hello World devconf 2025"
+  search: false
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+    - href: index.qmd
+      text: Home
 
 format:
   html:
     theme:
-      - cosmo
-      - brand
+      light: cosmo
+      dark: darkly
     css: styles.css
     toc: true
-
-
-

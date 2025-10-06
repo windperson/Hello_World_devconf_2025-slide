@@ -31,12 +31,32 @@ jobs:
         with:
           python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
       - run: pip install jupyter
+
+      - name: Render Hello World DevConf 2025 slides
+        uses: quarto-dev/quarto-actions/render@v2
+        env:
+          QUARTO_PROFILE: webslide
+        with: 
+          path: slides_src
+          to: revealjs
+
+      - name: Render GitHub Pages demo website
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          path: demo_website
+          to: html
+
+      - name: Copy slides asseets to demo_website # be aware of the directory structure quarto generates
+        run: |
+          mkdir -p demo_website/_site/docs/slides
+          cp -r slides_src/docs/* demo_website/_site/docs/
       
       # NOTE: If Publishing to GitHub Pages, set the permissions correctly (see top of this yaml)
-      - name: Publish to GitHub Pages (and render) 
+      - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
           path: demo_website
+          render: false # already rendered in previous step
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions

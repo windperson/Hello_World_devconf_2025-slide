@@ -1,0 +1,11 @@
+## Install Tools for Quarto documents authoring
+
+[Quarto CLI](https://github.com/quarto-dev/quarto-cli) (Command Line Interface) is the core engine for rendering Quarto documents.
+
+### Windows 
+
+推薦使用 [Scoop](https://scoop.sh/) 套件管理工具來安裝 Quarto ，以方便安裝相依的 Pandoc / TinyTeX 等工具。
+
+### MacOS
+
+推薦使用 [Homebrew](https://brew.sh/) 套件管理工具來安裝 Quarto ，以方便安裝相依的 Pandoc / TinyTeX 等工具。

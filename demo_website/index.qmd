@@ -2,6 +2,4 @@
 title: "Hello World devconf 2025"
 ---
 
-This is a Quarto website hosted on GitHub Pages.
-
-That source files are in the `demo_website/` folder.
+* [Reveal.js Slides](./docs/slides/web/#/title-slide)

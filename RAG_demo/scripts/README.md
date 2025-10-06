@@ -1,0 +1,1 @@
+To run the R script to test a local LM Studio model, be sure to install R and the `renv` package. Then run the `renv::restore()` command to install the required packages. After that, you can run the script using the command `Rscript test-local-lmstudio.R`, or install the [rig cli tool](https://github.com/r-lib/rig) and run `rig run test-local-lmstudio.R`.

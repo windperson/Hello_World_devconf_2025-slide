@@ -1,0 +1,115 @@
+---
+title: 終究要有Markdown何不一開始就Quarto?
+
+author: 老鮑伯
+format:
+    revealjs:
+        width: 1300
+        height: 1000
+        slide-tone: false
+        theme: simple
+        menu:
+            side: right
+        slide-number: true
+        include-in-header: 
+            text: |
+                <style>
+                .center-xy {
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -ms-transform: translateY(-50%), translateX(-50%);
+                transform: translateY(-50%), translateX(-50%);
+                }
+                .text-center {
+                text-align: center;
+                }
+                </style>
+from: markdown+emoji
+code-annotations: below
+---
+
+# Agenda
+
+:::: {.columns}
+::: {.column width="80%"}
+
+* What is Quarto?
+* 在macOS/Windows環境安裝&使用Quarto
+* Quarto撰寫技巧/發佈至各種不同類型文件<br/>(HTML/PDF/PowerPoint/Word)
+* 使用GitHub Action自動化CI/CD發佈到GitHub Page
+* RAGNAR套件打造自己的RAG AI知識庫檢索系統
+
+:::
+::: {.column width="20%"}
+
+{{< qrcode https://windperson.github.io/Hello_World_devconf_2025-slide/ width=240 height=240 >}}
+
+::::{.text-center .smaller}
+**Slide URL**
+::::
+
+:::
+::::
+
+## What is Quarto?
+
+Quarto(唸"闊拓") is an open-source (MIT license) scientific and technical publishing system built on [Pandoc](https://pandoc.org/) via extended markdown format (***.qmd***) files. It allows you to create dynamic documents, reports, presentations, and websites using a single authoring framework. Quarto supports multiple programming languages, including R, Python, and Julia, making it a versatile tool for data analysis and visualization.
+
+* Official website: [quarto.org](https://quarto.org/)
+
+* Github repo: [github.com/quarto-dev/](https://github.com/quarto-dev/)
+
+[![](./pics/qmd-how-it-works.png)](https://quarto.org/docs/get-started/hello/text-editor.html#rendering)
+
+## Quarto Input/Output
+
+* 預設輸入檔案格式 (***.qmd***, ***.ipynb***, ***.md***, ***.Rmd***)
+    * 在 . 或 _ 開頭的目錄名稱內的檔案不處理
+    * README.md/README.qmd 檔預設忽略
+
+* 預設輸出檔案格式 HTML，但可透過設定檔或命令列參數指定其他格式
+    * [Quarto Output Formats](https://quarto.org/docs/output-formats/all-formats.html)<br/>(html/pdf/docx/odt/epub等)
+    * [Support Publishing Services](https://quarto.org/docs/publishing/#getting-started)<br/>(Quarto Pub/GitHub Pages/Netlify/Post Connect/Confluence等)
+
+##
+
+::: {#tbl-panel layout-ncol=2}
+| Output File Formats | render engine |
+|---------|---------------|
+| [HTML](https://quarto.org/docs/reference/formats/html.html) | built-in |
+| [Markdown](https://quarto.org/docs/output-formats/all-formats.html#markdown) | built-in |
+| [MS Word<br/>(Office Open XML)](https://quarto.org/docs/reference/formats/docx.html) | Pandoc |
+| [.odt<br/>(Open Document Format)](https://quarto.org/docs/reference/formats/odt.html) | Pandoc |
+| [PDF](https://quarto.org/docs/reference/formats/pdf.html) | Pandoc + TinyTex |
+| [ePub](https://quarto.org/docs/reference/formats/epub.html) | Pandoc |
+
+: Quarto Output Formats {#tbl-first}
+
+| Presentation Formats | render engine |
+|----------------------|---------------|
+| [reveal.js](https://quarto.org/docs/presentations/revealjs/) | [reveal.js](https://revealjs.com/) |
+| [PowerPoint](https://quarto.org/docs/presentations/powerpoint.html) | Pandoc |
+| [Beamer (LaTeX)](https://quarto.org/docs/presentations/beamer.html) | Pandoc + TinyTex |
+
+: Quarto Presentation Formats {#tbl-second}
+
+Quarto 輸出格式
+:::
+
+<!-- included content -->
+
+# 在macOS/Windows環境安裝&使用Quarto
+
+{{< include "01_Tool_Setup/install_tools.qmd" >}}
+
+# Quarto撰寫技巧/發佈至各種不同類型文件<br/>(HTML/PDF/PowerPoint/Word)
+
+
+# 使用GitHub Action自動化CI/CD發佈到GitHub Page
+
+
+# RAGNAR套件打造自己的RAG AI知識庫檢索系統
+
+
