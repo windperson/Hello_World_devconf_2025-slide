@@ -1,7 +1,5 @@
 #!/usr/bin/env Rscript
 
-# python_path <- Sys.getenv("RETICULATE_PYTHON")
-
 library(ragnar)
 library(here)
 library(stringr)
@@ -9,26 +7,32 @@ library(dotty)
 library(purrr)
 library(dplyr)
 
+# Gather quarto docs source from quarto-web repo
 if (!dir.exists("./github/quarto-dev/quarto-web")) {
-  print("Cloning quarto-web repo")
+  message("Cloning quarto-web repo")
   fs::dir_create("./github/quarto-dev")
   withr::with_dir("./github/quarto-dev", {
-    system("git clone https://github.com/quarto-dev/quarto-web --depth 1")
+    result <- system("git clone https://github.com/quarto-dev/quarto-web --depth 1") # nolint: line_length_linter.
+    if (result != 0) {
+      stop("Failed to clone quarto-web repo")
+    }
   })
 }
 
-if (!dir.exists("./github/quarto-dev/quarto-web/_site/")) {
-  print("Rendering quarto-web site")
-  withr::with_dir("./github/quarto-dev/quarto-web", {
-    system("git pull")
-    system("quarto render")
-  })
-}
+message("Rendering quarto-web site")
+withr::with_dir("./github/quarto-dev/quarto-web", {
+  result <- system("git pull")
+  if(result != 0) {
+    stop("Failed to pull latest changes from quarto-web repo")
+  }
+  result <- system("quarto render")
+  if(result != 0) {
+    stop("Failed to render quarto-web site")
+  }
+})
 
-# Must Set back this env varible with the python installation that had install "numpy" pip package # nolint: line_length_linter.
-# Sys.setenv(RETICULATE_PYTHON = python_path)
 
-print("Start converting docs to RAG store")
+message("Start converting docs to RAG store")
 
 site_map_path <- "http://quarto.org/sitemap.xml"
 
@@ -55,19 +59,9 @@ message(sprintf("Of which %d exist", sum(file.exists(sitemap$local_path))))
 # sanity check
 stopifnot(file.exists(sitemap$local_path))
 
-# ragnar package loads its custom marktitdown failed on Windows,
-# so we explicitly load it from the custom path
-#custom_markitdown_path <- file.path(Sys.getenv("R_LIBS_USER"), "ragnar/python/")
-#message(sprintf("Using custom markitdown path:\n%s", custom_markitdown_path))
-
-# reticulate::import_from_path(
-#   "_ragnartools.markitdown",
-#   custom_markitdown_path,
-# )
-
 store_location <- "quarto-web.ragnar.store"
 
-print("Creating RAG store")
+message("Creating RAG store")
 store <- ragnar_store_create(
   store_location,
   name = "quarto_docs",
@@ -78,11 +72,13 @@ store <- ragnar_store_create(
       api_key = "lm-studio",
       model = "text-embedding-nomic-embed-text-v2-moe"
     )
+    # use this if you use OpenAI cloud model
+    # embed = \(x) ragnar::embed_openai(x, model = "text-embedding-3-small") # nolint
   },
   overwrite = TRUE
 )
 
-
+message(sprintf("Ingesting %d documents", nrow(sitemap)))
 for (r in seq_len(nrow(sitemap))) {
   .[local_path = local_path, url = url, ..] <- sitemap[r, ]
   message(sprintf("[% 3i/%i] ingesting: %s", r, nrow(sitemap), url))
@@ -92,6 +88,9 @@ for (r in seq_len(nrow(sitemap))) {
 
   ragnar_store_insert(store, chunks)
 }
+
+message("Building index")
+ragnar_store_build_index(store)
 
 DBI::dbDisconnect(store@con)
 
