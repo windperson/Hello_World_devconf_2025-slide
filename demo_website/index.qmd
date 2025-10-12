@@ -3,3 +3,7 @@ title: "Hello World devconf 2025"
 ---
 
 * [Reveal.js Slides](./docs/slides/web/#/title-slide)
+
+---
+
+* [Quarto Website RAG Demo](./Quarto-RAG.qmd)
