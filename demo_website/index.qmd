@@ -2,8 +2,12 @@
 title: "Hello World devconf 2025"
 ---
 
+# 投影片
+
 * [Reveal.js Slides](./docs/slides/web/#/title-slide)
 
 ---
+
+# RAG Quarto 知識庫檢索範例
 
 * [Quarto Website RAG Demo](./Quarto-RAG.qmd)

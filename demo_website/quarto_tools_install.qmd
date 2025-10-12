@@ -1,0 +1,5 @@
+---
+part1_img_prefix: "/images/part01/"
+---
+
+{{< include "../slides_src/01_Tool_Setup/install_tools.qmd" >}}

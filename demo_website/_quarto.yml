@@ -1,5 +1,9 @@
 project:
   type: website
+  resources:
+  - images/**
+  pre-render:
+  - scripts/copy_part01_pics.py
 
 website:
   title: "Hello World devconf 2025"
@@ -8,6 +12,8 @@ website:
     left:
     - href: index.qmd
       text: Home
+    - href: quarto_tools_install.qmd
+      text: Quarto工具安裝
 
 format:
   html:

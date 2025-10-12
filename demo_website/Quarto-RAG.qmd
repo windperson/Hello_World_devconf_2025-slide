@@ -1,5 +1,7 @@
 ---
 title: "Quarto Website RAG Demo"
+resources: 
+  - screen_casts/create-quarto-web-rag-store.cast
 ---
 
 ## Create RAG Store of Quarto Website
