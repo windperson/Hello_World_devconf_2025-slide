@@ -1,9 +1,16 @@
 [
   {
+    "objectID": "Quarto-RAG.html#query-using-llm-by-ellmer-package",
+    "href": "Quarto-RAG.html#query-using-llm-by-ellmer-package",
+    "title": "Quarto Website RAG Demo",
+    "section": "Query using LLM by ellmer package",
+    "text": "Query using LLM by ellmer package"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Hello World devconf 2025",
     "section": "",
-    "text": "Reveal.js Slides"
+    "text": "Reveal.js Slides\n\n\n\nQuarto Website RAG Demo"
   }
 ]
