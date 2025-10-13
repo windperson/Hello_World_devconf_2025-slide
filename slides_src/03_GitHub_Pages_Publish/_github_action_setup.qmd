@@ -1,0 +1,53 @@
+## GitHub Action 自動化CI/CD發佈到GitHub Page
+
+官方提供可讓我們使用 GitHub 做原始碼控管的 Quarto 專案快速地建立自動化發佈文件到幾個[官方支援的出版網站](https://quarto.org/docs/publishing/)。
+
+GitHub Action Repo : <https://github.com/quarto-dev/quarto-actions>
+
+::: {.callout-tip}
+使用 GitHub Action 自動化發佈 Quarto 文件到 GitHub Page 有[**官方說明**](https://quarto.org/docs/publishing/github-pages.html)，照樣操作就可以順利發佈到 GitHub Pages 上。<br/>或者參考其 GitHub Repo 上的[範例教學](https://github.com/quarto-dev/quarto-actions/tree/main/examples)以及拿[範例GitHub Action YAML設定檔 `quarto-publish-example.yml`](https://github.com/quarto-dev/quarto-actions/blob/main/examples/quarto-publish-example.yml)來配合修改。
+:::
+
+## GitHub Action 進階設定 {.scrollable}
+
+* 如 ***.qmd*** 文件中有使用到 [Jupyter Inline Code 程式碼區塊](https://quarto.org/docs/computations/inline-code.html)，需額外增加一個安裝 Python 的步驟，然後[使用 PIP 安裝 Jupyter 套件](https://pypi.org/project/jupyter/)：
+   
+   ```yaml
+   - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+   - run: pip install jupyter
+   ```
+   
+* 如有使用到 Quarto project profile / 需指定輸出格式的話，使用 **`QUARTO_PROFILE`** 環境變數指定 profile 名稱，和 `with: to:` 的 YAML 設定來指定輸出格式，例如本簡報自身的 quarto render 設定：
+   
+   ```yaml
+    - name: Render Hello World DevConf 2025 slides
+      uses: quarto-dev/quarto-actions/render@v2
+      env:
+        QUARTO_PROFILE: webslide
+      with: 
+        path: slides_src
+        to: revealjs
+   ```
+    
+    那個 `to:` 的設定值會對應到 Quarto 官方參考文件中輸出格式的名稱，如 `revealjs`、`html`、`pdf`、`docx`、`gfm` 等，以下是[輸出 PowerPoint 的參考網頁](https://quarto.org/docs/reference/formats/presentations/pptx.html)截圖：
+    ![]({{< meta part3_img_prefix >}}pics/quarto_export_format_help_page.png)
+* 如果有多個專案需要發佈到同一個 GitHub Pages 網站，可先個別 Quarto 專案呼叫 quarto render 的 GitHub Action 完成之後，再使用 `run: ` 的 Shell 指令將多個專案的輸出目錄複製到主要專案的輸出目錄，然後再跑 publish action，例如以下範例設定：   
+   
+   ```yaml
+   - name: Copy slides asseets to demo_website
+     run: |
+         mkdir -p demo_website/_site/docs/slides
+         cp -r slides_src/docs/* demo_website/_site/docs/
+  - name: Publish to GitHub Pages
+    uses: quarto-dev/quarto-actions/publish@v2
+    with:
+        target: gh-pages
+        path: demo_website
+        render: false 
+    env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   ```
+   
