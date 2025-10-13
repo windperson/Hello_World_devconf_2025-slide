@@ -1,6 +1,3 @@
----
-# 
----
 ## Quarto (***.qmd***) 文件撰寫技巧
 
 ***.qmd*** 文件語法其實就是 Markdown (***.md***) 語法的超集合，支援更多功能，通常檔案內容會類似：
@@ -107,9 +104,9 @@ format: html
 
 :::
 
-## 條件內容 (Conditional Content)
+## 條件式內容 (Conditional Content)
 
-Quarto 支援[條件內容 (Conditional Content)](https://quarto.org/docs/authoring/conditional.html)，可根據輸出格式、目前使用的 [Project Profile](https://quarto.org/docs/projects/profiles.html#profile-content) 來決定是否顯示指定區塊內容。
+Quarto 支援[條件式內容 (Conditional Content)](https://quarto.org/docs/authoring/conditional.html)，可根據輸出格式、目前使用的 [Project Profile](https://quarto.org/docs/projects/profiles.html#profile-content) 來決定是否顯示指定區塊內容。
 
 藉由此語法可控制在不同輸出格式中顯示不同內容，例如[本簡報的Part1原始碼59~71行](https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/slides_src/01_Tool_Setup/install_tools.qmd#L59-L71)：
 

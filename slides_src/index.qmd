@@ -136,6 +136,7 @@ Quarto 讓寫文件內容統一於 Quarto 的 Markdown 格式（***.qmd***）檔
 
 {{< include "02_Quarto_Tips/quarto_tips.qmd" >}}
 
+{{< include "02_Quarto_Tips/quarto_project_export_tips.qmd" >}}
 
 # 使用GitHub Action自動化CI/CD發佈到GitHub Page
 

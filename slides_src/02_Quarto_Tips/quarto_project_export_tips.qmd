@@ -1,0 +1,35 @@
+## Quarto Project 
+
+[Quarto render 有分為單檔輸出模式以及使用 [Quarto Project 專案](https://quarto.org/docs/projects/quarto-projects.html)輸出模式，專案模式的功能較多，可讓多 ***.qmd*** 檔共用設定、定義 metadata / [var變數](https://quarto.org/docs/authoring/variables.html)、[Project Profile](https://quarto.org/docs/projects/profiles.html)、執行 [Project scripts](https://quarto.org/docs/projects/scripts.html) 等功能。]{.small}
+
+專案可用 Quarto CLI 指令 或 VSCode Quarto 擴充套件來建立:
+
+:::: {.columns}
+::: {.column width="50%"}
+![quarto create project]({{< meta part2_img_prefix >}}pics/quarto_cli_create_project.png)
+:::
+::: {.column width="50%"}
+![VSCode Quarto 擴充套件建立專案]({{< meta part2_img_prefix >}}pics/vscode_create_quarto_project.png)
+:::
+::::
+
+建立專案後，會在該目錄下產生一個 ***_quarto.yml_*** 的設定檔，在此檔案中操作專案全域metadata/變數和設定選項。
+
+## 匯出多種格式文件 {.scrollable}
+
+### PDF: 
+
+* 輸出 PDF 檔案需要 LaTeX 環境（目前預設使用 [TinyTex](https://yihui.org/tinytex/)）
+* 如果原始 ***.qmd*** 檔內容有中/日/韓文(CJK)，需要[在 metadata 中加入 `mainfont` 設定，指定系統中已安裝的CJK字型](https://quarto.org/docs/output-formats/pdf-basics.html#unicode-characters)，以免PDF內容出現亂碼。
+
+### PowerPoint/Word:
+
+* 輸出 PowerPoint/Word 檔案需先使用 pandoc 子命令產生對應的範本檔案(.docx/.pptx)，用 Quarto CLI 指令： `quarto pandoc -o 欲產生範本檔名[.docx|.pptx] --print-default-data-file reference[.docx|pptx]` 來產範本檔。
+* Word/PowerPoint範本檔內的 ["樣式（Stylew"](https://support.microsoft.com/zh-tw/office/customize-or-create-new-styles-d38d6e47-f6fc-48eb-a607-1eb120dec563) 會對應到 ***.qmd*** 檔中指定的 `::: {.class_name}` 格式設定，修改範本檔的 Style 可改變輸出文件的樣式。
+   
+  ::: {.callout-note}
+  Quarto 的 Callout block 沒有對應到 Word(.docx) 的預設範本檔輸出樣式中，但可自行定義 Word Style 樣式來對應產生輸出於 Word 文件檔的內容。
+  :::
+
+* 受制於 Pandoc 的 Word/PowerPoint 輸出功能較簡單，無法支援 Quarto 的所有格式設定。
+
