@@ -4,7 +4,7 @@ title: "Hello World devconf 2025"
 
 # 投影片
 
-* [Reveal.js Slides](./docs/slides/web/#/title-slide)
+* [Reveal.js Slides](./docs/slides/web/#/title-slide){target="_blank"}
 
 ---
 
