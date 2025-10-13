@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.8.25">
 
   <meta name="author" content="老鮑伯">
-  <title>終究要有Markdown何不一開始就Quarto?</title>
+  <title>Install Tools for Quarto documents authoring</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -207,7 +207,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">終究要有Markdown何不一開始就Quarto?</h1>
+  <h1 class="title">Install Tools for Quarto documents authoring</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -363,14 +363,9 @@ Table&nbsp;1: Quarto 輸出格式
 </div>
 <!-- included content -->
 </section></section>
+<section>
 <section id="在macoswindows環境安裝使用quarto" class="title-slide slide level1 center">
 <h1>在macOS/Windows環境安裝&amp;使用Quarto</h1>
-
-</section>
-
-<section>
-<section id="install-tools-for-quarto-documents-authoring" class="title-slide slide level1 center">
-<h1>Install Tools for Quarto documents authoring</h1>
 
 </section>
 <section id="quarto-cli-command-line-interface" class="slide level2">
@@ -378,7 +373,7 @@ Table&nbsp;1: Quarto 輸出格式
 <p>Quarto CLI is the core engine for rendering Quarto documents.</p>
 <h3 id="windows">Windows</h3>
 <p>建議使用 <a href="https://scoop.sh/">Scoop</a> 套件管理工具來安裝 Quarto ，以方便安裝相依的 Pandoc / TinyTeX 等工具。</p>
-<p>需先加入 <a href="https://github.com/cderv/r-bucket">r-bucket</a> 來安裝 R 語言相關的工具，然後安裝 quareto 以及 TinyTex ：<br> （Quarto 所需的 <a href="https://github.com/quarto-dev/quarto-cli/discussions/1642#discussioncomment-3308850">Pandoc以內建</a>，不需要另外安裝）</p>
+<p>需先加入 <a href="https://github.com/cderv/r-bucket">r-bucket</a> 來安裝 R 語言相關的工具，然後安裝 quareto 以及 TinyTex ：<br> （Quarto 所需的 <a href="https://github.com/quarto-dev/quarto-cli/discussions/1642#discussioncomment-3308850">Pandoc已內建</a>，不需要另外安裝）</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href=""></a><span class="ex">scoop</span> bucket add r-bucket https://github.com/cderv/r-bucket.git</span>
 <span id="cb1-2"><a href=""></a><span class="ex">scoop</span> install quarto</span>
 <span id="cb1-3"><a href=""></a><span class="ex">scoop</span> install TinyTeX</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -389,12 +384,26 @@ Table&nbsp;1: Quarto 輸出格式
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href=""></a><span class="ex">conda</span> install conda-forge::quarto</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>安裝完成後就有 <code>quarto</code> 指令可使用。</p>
 </section>
-<section id="vs-code-extension-tools" class="slide level2">
-<h2>VS Code Extension Tool(s)</h2>
-<p>Visual Studio Code <a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto 擴充套件</a>提供 Quarto 專案建立、<strong><em>.qmd</em></strong> 文件語法高亮呈現預覽結果、編輯 <strong><em>.ipynb</em></strong> 文件 Markdown Cell 介面等功能：</p>
-
-<img data-src="01_Tool_Setup/pics/vscode_quarto_extension_commands.png" class="quarto-figure quarto-figure-center r-stretch"><p>此擴充套件會呼叫 Quarto CLI 來進行文件的渲染，因此需安裝 Quarto CLI 才能正常運作。</p>
-<p>如果有在文件內容中使用 Jupyter Notebook (Python/R/Julia) Code Cell 功能的話，請參閱 <a href="https://github.com/quarto-dev/quarto/tree/main/apps/vscode#code-cells">github 說明文件再安裝對應的 Python/R/Julia 擴充套件</a>。</p>
+<section id="vscode-quarto-extension" class="slide level2">
+<h2>VSCode &amp; Quarto Extension</h2>
+<ul>
+<li><p>VSCode：<a href="https://code.visualstudio.com/download">Visual Studio Code (VSCode)</a> 是一個免費跨平台的程式碼編輯器，支援多種程式語言和擴充套件，適合用來撰寫有多種程式碼技術組成的專案/文件。</p></li>
+<li><p>Visual Studio Code <a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto 擴充套件</a>提供 Quarto 專案建立、<strong><em>.qmd</em></strong> 文件語法高亮呈現預覽結果、編輯 <strong><em>.ipynb</em></strong> 文件 Markdown Cell 介面等功能（詳細功能請參閱<a href="https://quarto.org/docs/tools/vscode/index.html">官方文件</a>）：</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="01_Tool_Setup/pics/vscode_quarto_extension_commands.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div></li>
+</ul>
+<p>此擴充套件會呼叫 Quarto CLI 來進行文件的渲染，因此需安裝 Quarto CLI 才能正常運作。</p>
+</section>
+<section id="一些額外工具設定建議" class="slide level2">
+<h2>一些額外工具/設定建議</h2>
+<ul>
+<li><p>如有在文件內容使用 Jupyter Notebook (Python/R/Julia) Code Cell 功能，參閱 <a href="https://github.com/quarto-dev/quarto/tree/main/apps/vscode#code-cells">github 說明文件安裝對應的 Python/R/Julia 擴充套件</a>。</p></li>
+<li><p>由於 markdown(.md)/quarto(.qmd) 文件中不少格式都是靠 Indent 幾個空白(space)字元來達成效果，建議修改 <a href="https://code.visualstudio.com/docs/editing/codebasics#_indentation">VSCode 的 Indentation 設定</a>，如此按下 tab 鍵時就會插入2個空白字元，而不是插入一個 tab 字元。</p></li>
+<li><p>會用 Vim ，可安裝 <a href="https://marketplace.visualstudio.com/items?itemName=vscodevim.vim">VSCode 的 Vim 擴充套件</a>和 <a href="https://neovim.io/">NeoVim</a> 在 VSCode 使用 Vim，打字更有效率。</p></li>
+</ul>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -404,10 +413,16 @@ Table&nbsp;1: Quarto 輸出格式
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>強烈建議要把 VSCode <a href="https://code.visualstudio.com/docs/copilot/ai-powered-suggestions#_enable-or-disable-code-completions">Copilot AI “#NES (Next Edit Suggestion)”</a> 的功能關掉，因為如果在 VSCode 裡面編輯中英文混雜的 #markdown / quarto 文件時，按下tab鍵接受 AI 建議修改時常常不察，就把整個句中的中文全型括號（）以及半形()符號亂換混掉，於是 hyperlink 或 img 語法就壞掉了。</p>
+<p>建議把 VSCode <a href="https://code.visualstudio.com/docs/copilot/ai-powered-suggestions#_enable-or-disable-code-completions">Copilot AI “#NES (Next Edit Suggestion)”</a> 的功能關掉，因為如果在 VSCode 裡面編輯中英文混雜的 markdown / quarto 文件時，按下tab鍵接受 AI 建議修改時常常不察，就把整個句中的中文全型括號（）以及半形()符號亂換混掉，於是 hyperlink 或 img 語法就壞掉了。</p>
 </div>
 </div>
 </div>
+</section>
+<section id="使用-quarto-撰寫文件" class="slide level2">
+<h2>使用 Quarto 撰寫文件</h2>
+<p>上述的工具安裝完成後，當在 VSCode 中開啟並編輯 <strong><em>.qmd</em></strong> 文件內容時，就可以 Windows 按 <code>Ctrl+Shift+K</code>， MacOS 按 <code>Command(⌘)+Shift+K</code>顯示文件的渲染結果。</p>
+
+<img data-src="01_Tool_Setup/pics/vscode_quarto_preview.png" class="quarto-figure quarto-figure-center r-stretch"><p>這其實就是用 Quarto CLI 的 <a href="https://quarto.org/docs/projects/code-execution.html#incremental-render"><code>quarto render</code></a> 指令來渲染文件內容，並在 VSCode 開啟右分頁顯示結果。</p>
 </section></section>
 <section id="quarto撰寫技巧發佈至各種不同類型文件-htmlpdfpowerpointword" class="title-slide slide level1 center">
 <h1>Quarto撰寫技巧/發佈至各種不同類型文件<br>(HTML/PDF/PowerPoint/Word)</h1>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Hello World devconf 2025</title>
+<title>Install Tools for Quarto documents authoring – Hello World devconf 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -242,11 +277,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./quarto_tools_install.html"> 
+    <a class="nav-link active" href="./quarto_tools_install.html" aria-current="page"> 
 <span class="menu-text">Quarto工具安裝</span></a>
   </li>  
 </ul>
@@ -266,8 +301,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#投影片" id="toc-投影片" class="nav-link active" data-scroll-target="#投影片">投影片</a></li>
-  <li><a href="#rag-quarto-知識庫檢索範例" id="toc-rag-quarto-知識庫檢索範例" class="nav-link" data-scroll-target="#rag-quarto-知識庫檢索範例">RAG Quarto 知識庫檢索範例</a></li>
+  <li><a href="#quarto-cli-command-line-interface" id="toc-quarto-cli-command-line-interface" class="nav-link active" data-scroll-target="#quarto-cli-command-line-interface">Quarto CLI (Command Line Interface)</a>
+  <ul class="collapse">
+  <li><a href="#windows" id="toc-windows" class="nav-link" data-scroll-target="#windows">Windows</a></li>
+  <li><a href="#macos" id="toc-macos" class="nav-link" data-scroll-target="#macos">MacOS</a></li>
+  <li><a href="#anacondaminiconda" id="toc-anacondaminiconda" class="nav-link" data-scroll-target="#anacondaminiconda">Anaconda/Miniconda</a></li>
+  </ul></li>
+  <li><a href="#vscode-quarto-extension" id="toc-vscode-quarto-extension" class="nav-link" data-scroll-target="#vscode-quarto-extension">VSCode &amp; Quarto Extension</a></li>
+  <li><a href="#一些額外工具設定建議" id="toc-一些額外工具設定建議" class="nav-link" data-scroll-target="#一些額外工具設定建議">一些額外工具/設定建議</a></li>
+  <li><a href="#使用-quarto-撰寫文件" id="toc-使用-quarto-撰寫文件" class="nav-link" data-scroll-target="#使用-quarto-撰寫文件">使用 Quarto 撰寫文件</a></li>
   </ul>
 </nav>
     </div>
@@ -277,7 +319,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Hello World devconf 2025</h1>
+<h1 class="title">Install Tools for Quarto documents authoring</h1>
 </div>
 
 
@@ -294,18 +336,71 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="投影片" class="level1">
-<h1>投影片</h1>
-<ul>
-<li><a href="./docs/slides/web/#/title-slide">Reveal.js Slides</a></li>
-</ul>
-<hr>
+<section id="quarto-cli-command-line-interface" class="level2">
+<h2 class="anchored" data-anchor-id="quarto-cli-command-line-interface"><a href="https://github.com/quarto-dev/quarto-cli">Quarto CLI</a> (Command Line Interface)</h2>
+<p>Quarto CLI is the core engine for rendering Quarto documents.</p>
+<section id="windows" class="level3">
+<h3 class="anchored" data-anchor-id="windows">Windows</h3>
+<p>建議使用 <a href="https://scoop.sh/">Scoop</a> 套件管理工具來安裝 Quarto ，以方便安裝相依的 Pandoc / TinyTeX 等工具。</p>
+<p>需先加入 <a href="https://github.com/cderv/r-bucket">r-bucket</a> 來安裝 R 語言相關的工具，然後安裝 quareto 以及 TinyTex ：<br> （Quarto 所需的 <a href="https://github.com/quarto-dev/quarto-cli/discussions/1642#discussioncomment-3308850">Pandoc已內建</a>，不需要另外安裝）</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scoop</span> bucket add r-bucket https://github.com/cderv/r-bucket.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">scoop</span> install quarto</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">scoop</span> install TinyTeX</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="rag-quarto-知識庫檢索範例" class="level1">
-<h1>RAG Quarto 知識庫檢索範例</h1>
+<section id="macos" class="level3">
+<h3 class="anchored" data-anchor-id="macos">MacOS</h3>
+<p>使用 <a href="https://brew.sh/">Homebrew</a> 套件管理工具來安裝 Quarto</p>
+</section>
+<section id="anacondaminiconda" class="level3">
+<h3 class="anchored" data-anchor-id="anacondaminiconda">Anaconda/Miniconda</h3>
+<p>Conda Forge 也有提供 <a href="https://anaconda.org/conda-forge/quarto">Quarto CLI 套件</a>可安裝：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install conda-forge::quarto</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>安裝完成後就有 <code>quarto</code> 指令可使用。</p>
+</section>
+</section>
+<section id="vscode-quarto-extension" class="level2">
+<h2 class="anchored" data-anchor-id="vscode-quarto-extension">VSCode &amp; Quarto Extension</h2>
 <ul>
-<li><a href="./Quarto-RAG.html">Quarto Website RAG Demo</a></li>
+<li><p>VSCode：<a href="https://code.visualstudio.com/download">Visual Studio Code (VSCode)</a> 是一個免費跨平台的程式碼編輯器，支援多種程式語言和擴充套件，適合用來撰寫有多種程式碼技術組成的專案/文件。</p></li>
+<li><p>Visual Studio Code <a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto 擴充套件</a>提供 Quarto 專案建立、<strong><em>.qmd</em></strong> 文件語法高亮呈現預覽結果、編輯 <strong><em>.ipynb</em></strong> 文件 Markdown Cell 介面等功能（詳細功能請參閱<a href="https://quarto.org/docs/tools/vscode/index.html">官方文件</a>）：</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/part01/pics/vscode_quarto_extension_commands.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div></li>
 </ul>
+<p>此擴充套件會呼叫 Quarto CLI 來進行文件的渲染，因此需安裝 Quarto CLI 才能正常運作。</p>
+</section>
+<section id="一些額外工具設定建議" class="level2">
+<h2 class="anchored" data-anchor-id="一些額外工具設定建議">一些額外工具/設定建議</h2>
+<ul>
+<li><p>如有在文件內容使用 Jupyter Notebook (Python/R/Julia) Code Cell 功能，參閱 <a href="https://github.com/quarto-dev/quarto/tree/main/apps/vscode#code-cells">github 說明文件安裝對應的 Python/R/Julia 擴充套件</a>。</p></li>
+<li><p>由於 markdown(.md)/quarto(.qmd) 文件中不少格式都是靠 Indent 幾個空白(space)字元來達成效果，建議修改 <a href="https://code.visualstudio.com/docs/editing/codebasics#_indentation">VSCode 的 Indentation 設定</a>，如此按下 tab 鍵時就會插入2個空白字元，而不是插入一個 tab 字元。</p></li>
+<li><p>會用 Vim ，可安裝 <a href="https://marketplace.visualstudio.com/items?itemName=vscodevim.vim">VSCode 的 Vim 擴充套件</a>和 <a href="https://neovim.io/">NeoVim</a> 在 VSCode 使用 Vim，打字更有效率。</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>建議把 VSCode <a href="https://code.visualstudio.com/docs/copilot/ai-powered-suggestions#_enable-or-disable-code-completions">Copilot AI “#NES (Next Edit Suggestion)”</a> 的功能關掉，因為如果在 VSCode 裡面編輯中英文混雜的 markdown / quarto 文件時，按下tab鍵接受 AI 建議修改時常常不察，就把整個句中的中文全型括號（）以及半形()符號亂換混掉，於是 hyperlink 或 img 語法就壞掉了。</p>
+</div>
+</div>
+</section>
+<section id="使用-quarto-撰寫文件" class="level2">
+<h2 class="anchored" data-anchor-id="使用-quarto-撰寫文件">使用 Quarto 撰寫文件</h2>
+<p>上述的工具安裝完成後，當在 VSCode 中開啟並編輯 <strong><em>.qmd</em></strong> 文件內容時，就可以 Windows 按 <code>Ctrl+Shift+K</code>， MacOS 按 <code>Command(⌘)+Shift+K</code>顯示文件的渲染結果。</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/part01/pics/vscode_quarto_preview.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>這其實就是用 Quarto CLI 的 <a href="https://quarto.org/docs/projects/code-execution.html#incremental-render"><code>quarto render</code></a> 指令來渲染文件內容，並在 VSCode 開啟右分頁顯示結果。</p>
 
 
 </section>
