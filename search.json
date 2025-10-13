@@ -16,35 +16,35 @@
   {
     "objectID": "quarto_tools_install.html",
     "href": "quarto_tools_install.html",
-    "title": "Install Tools for Quarto documents authoring",
+    "title": "Hello World devconf 2025",
     "section": "",
     "text": "Quarto CLI is the core engine for rendering Quarto documents.\n\n\n建議使用 Scoop 套件管理工具來安裝 Quarto ，以方便安裝相依的 Pandoc / TinyTeX 等工具。\n需先加入 r-bucket 來安裝 R 語言相關的工具，然後安裝 quareto 以及 TinyTex ： （Quarto 所需的 Pandoc已內建，不需要另外安裝）\nscoop bucket add r-bucket https://github.com/cderv/r-bucket.git\nscoop install quarto\nscoop install TinyTeX\n\n\n\n使用 Homebrew 套件管理工具來安裝 Quarto\n\n\n\nConda Forge 也有提供 Quarto CLI 套件可安裝：\nconda install conda-forge::quarto\n安裝完成後就有 quarto 指令可使用。"
   },
   {
     "objectID": "quarto_tools_install.html#quarto-cli-command-line-interface",
     "href": "quarto_tools_install.html#quarto-cli-command-line-interface",
-    "title": "Install Tools for Quarto documents authoring",
+    "title": "Hello World devconf 2025",
     "section": "",
     "text": "Quarto CLI is the core engine for rendering Quarto documents.\n\n\n建議使用 Scoop 套件管理工具來安裝 Quarto ，以方便安裝相依的 Pandoc / TinyTeX 等工具。\n需先加入 r-bucket 來安裝 R 語言相關的工具，然後安裝 quareto 以及 TinyTex ： （Quarto 所需的 Pandoc已內建，不需要另外安裝）\nscoop bucket add r-bucket https://github.com/cderv/r-bucket.git\nscoop install quarto\nscoop install TinyTeX\n\n\n\n使用 Homebrew 套件管理工具來安裝 Quarto\n\n\n\nConda Forge 也有提供 Quarto CLI 套件可安裝：\nconda install conda-forge::quarto\n安裝完成後就有 quarto 指令可使用。"
   },
   {
     "objectID": "quarto_tools_install.html#vscode-quarto-extension",
     "href": "quarto_tools_install.html#vscode-quarto-extension",
-    "title": "Install Tools for Quarto documents authoring",
+    "title": "Hello World devconf 2025",
     "section": "VSCode & Quarto Extension",
     "text": "VSCode & Quarto Extension\n\nVSCode：Visual Studio Code (VSCode) 是一個免費跨平台的程式碼編輯器，支援多種程式語言和擴充套件，適合用來撰寫有多種程式碼技術組成的專案/文件。\nVisual Studio Code Quarto 擴充套件提供 Quarto 專案建立、.qmd 文件語法高亮呈現預覽結果、編輯 .ipynb 文件 Markdown Cell 介面等功能（詳細功能請參閱官方文件）：\n\n\n\n\n\n\n此擴充套件會呼叫 Quarto CLI 來進行文件的渲染，因此需安裝 Quarto CLI 才能正常運作。"
   },
   {
     "objectID": "quarto_tools_install.html#一些額外工具設定建議",
     "href": "quarto_tools_install.html#一些額外工具設定建議",
-    "title": "Install Tools for Quarto documents authoring",
+    "title": "Hello World devconf 2025",
     "section": "一些額外工具/設定建議",
     "text": "一些額外工具/設定建議\n\n如有在文件內容使用 Jupyter Notebook (Python/R/Julia) Code Cell 功能，參閱 github 說明文件安裝對應的 Python/R/Julia 擴充套件。\n由於 markdown(.md)/quarto(.qmd) 文件中不少格式都是靠 Indent 幾個空白(space)字元來達成效果，建議修改 VSCode 的 Indentation 設定，如此按下 tab 鍵時就會插入2個空白字元，而不是插入一個 tab 字元。\n會用 Vim ，可安裝 VSCode 的 Vim 擴充套件和 NeoVim 在 VSCode 使用 Vim，打字更有效率。\n\n\n\n\n\n\n\nTip\n\n\n\n建議把 VSCode Copilot AI “#NES (Next Edit Suggestion)” 的功能關掉，因為如果在 VSCode 裡面編輯中英文混雜的 markdown / quarto 文件時，按下tab鍵接受 AI 建議修改時常常不察，就把整個句中的中文全型括號（）以及半形()符號亂換混掉，於是 hyperlink 或 img 語法就壞掉了。"
   },
   {
     "objectID": "quarto_tools_install.html#使用-quarto-撰寫文件",
     "href": "quarto_tools_install.html#使用-quarto-撰寫文件",
-    "title": "Install Tools for Quarto documents authoring",
+    "title": "Hello World devconf 2025",
     "section": "使用 Quarto 撰寫文件",
     "text": "使用 Quarto 撰寫文件\n上述的工具安裝完成後，當在 VSCode 中開啟並編輯 .qmd 文件內容時，就可以 Windows 按 Ctrl+Shift+K， MacOS 按 Command(⌘)+Shift+K顯示文件的渲染結果。\n\n\n\n\n\n這其實就是用 Quarto CLI 的 quarto render 指令來渲染文件內容，並在 VSCode 開啟右分頁顯示結果。"
   }
