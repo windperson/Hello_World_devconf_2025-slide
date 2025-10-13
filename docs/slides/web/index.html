@@ -489,9 +489,125 @@ format: html
 <p>除了在大括號 { }中套用定義在 CSS 檔案的 CSS 樣式外，也可直接寫<code>{style="..."}</code>來指定 tag 的 CSS inline style。</p>
 <p>此外也可在<a href="https://quarto.org/docs/authoring/markdown-basics.html#raw-content" target="_blank"><strong><em>.qmd</em></strong> 文件內容中直接使用純 HTML 語法</a>。</p>
 </section>
-<section id="section-2" class="slide level2">
+<section id="quarto-markdown-支援的額外語法" class="slide level2">
+<h2>Quarto Markdown 支援的額外語法</h2>
+<ul>
+<li><p>表格除了原本 Markdown table 語法外，還支援 <a href="https://quarto.org/docs/authoring/tables.html#grid-tables">Grid 表格語法</a>，多行表頭、表格內換行等比標準 Markdown 更強的功能。</p></li>
+<li><p><a href="https://quarto.org/docs/authoring/markdown-basics.html#callout-blocks">Callout block 語法</a>會產生有特定樣式的區塊：</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>這是 note 樣式的 callout block</p>
+</div>
+</div>
+</div>
+<p>寫法：</p>
+<pre style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"><code>::: {.callout-note}
+這是 note 樣式的 callout block
+:::</code></pre>
+<p>有 <code>note</code>、<code>tip</code>、<code>warning</code>、<code>caution</code>、<code>important</code> 多種樣式與圖示。</p></li>
+<li><p><a href="https://quarto.org/docs/authoring/shortcodes.html">Shortcodes</a> 可在內容於 <code>quarto render</code> 時插入 <a href="https://quarto.org/docs/authoring/variables.html">Quarto project 定義的變數內容</a>。</p></li>
+<li><p>程式碼語法區塊支援<a href="https://quarto.org/docs/authoring/code-annotation.html">註解標示(<em>Code Annotation</em>)</a>。</p></li>
+</ul>
+</section>
+<section id="section-2" class="slide level2 scrollable">
 <h2></h2>
-<p>表格的語法除了原本 Markdown 的語法外，還支援 Pandoc 的表格語法，像是多行表頭、表格內換行、表格內插入圖片等功能。</p>
+<p>程式碼區塊的內容後面加上 <code>空白字元+該語言使用的單行註解語法+空白字元+&lt;號碼&gt;</code> 為該行程式碼加上<a href="https://quarto.org/docs/authoring/code-annotation.html">註解標示(<em>Code Annotation</em>)</a>，例如：</p>
+<p><strong><em>.qmd</em></strong>程式碼區塊：</p>
+<pre style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"><code>```json
+    "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+        "title": "Bundled pwsh",
+        "path": "D:\\vscode_portable\\PowerShell-x64\\pwsh.exe",
+        "args": [
+        "-nol",
+        "-nop",                                                                         // &lt;1&gt;
+        "-noe",
+        "-ex",
+        "RemoteSigned",
+        "-Command",                                                                     // &lt;2&gt;
+        "Invoke-expression \". D:\\vscode_portable\\pwsh-scripts\\Set-PwshTools.ps1\""  // &lt;2&gt;
+        ]
+    }
+    },
+1. 使用 `-nop` 參數避免執行目前系統/使用者等級的 PowerShell Profile 設定檔
+2. 執行 `Invoke-Expression ". D:\vscode_portable\pwsh-scripts\Set-PwshTools.ps1"` 來替代。
+```</code></pre>
+<p>顯示效果：</p>
+<div data-fig-align="center">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="02_Quarto_Tips/pics/html_code_annotation_effect.png"></p>
+<figcaption>HTML輸出</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="02_Quarto_Tips/pics/revealjs_code_annotation_effect.png"></p>
+<figcaption>Reveal.js網頁簡報輸出</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="條件內容-conditional-content" class="slide level2">
+<h2>條件內容 (Conditional Content)</h2>
+<p>Quarto 支援<a href="https://quarto.org/docs/authoring/conditional.html">條件內容 (Conditional Content)</a>，可根據輸出格式、目前使用的 <a href="https://quarto.org/docs/projects/profiles.html#profile-content">Project Profile</a> 來決定是否顯示指定區塊內容。</p>
+<p>藉由此語法可控制在不同輸出格式中顯示不同內容，例如<a href="https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/slides_src/01_Tool_Setup/install_tools.qmd#L63-L71">本簡報的Part1原始碼63~71行</a>：</p>
+
+<img data-src="02_Quarto_Tips/pics/conditional_content_demo.png" class="quarto-figure quarto-figure-center r-stretch"><p>這樣就可以在輸出為整頁 HTML Page 的 Quarto 相關工具安裝文件時藏起這段建議把 AI Completion 功能關掉的說明文字，避免離題。</p>
+</section>
+<section id="引入其他-.qmd-文件內容-including-content" class="slide level2">
+<h2>引入其他 <strong><em>.qmd</em></strong> 文件內容 (Including Content)</h2>
+<p>Quarto 支援在 <strong><em>.qmd</em></strong> 文件的內容中<a href="https://quarto.org/docs/authoring/includes.html">引入其他 <strong><em>.qmd</em></strong> 文件內容</a>，達到 *<strong>.qmd</strong> 檔內容 re-use 的目的。</p>
+<p>本簡報的 Quarto 相關工具安裝說明內容就是利用此引入機制<a href="https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/demo_website/quarto_tools_install.qmd#L10">在資源網站(demo_website)上重用以 HTML Page 輸出</a>。</p>
+
+<img data-src="02_Quarto_Tips/pics/include_content_demo.png" class="quarto-figure quarto-figure-center r-stretch"><div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>此機制需配合 <a href="https://quarto.org/docs/projects/quarto-projects.html">Quarto Project</a> 機制，定義的路徑起點是 Project Root 目錄位置（存 <code>_quarto.yml</code> 檔案的目錄）為準，在 Project Root 目錄以外的非 <strong><em>.qmd</em></strong> 檔案在被 <code>{{&lt; include "..." &gt;}}</code> 的 <strong><em>.qmd</em></strong> 內容中無法正確 reference ， Quarto 在 render 時不會去拷貝那些檔案到輸出位置，需自行撰寫 *<strong>Project pre-render script</strong> 先手動複製到目前 Project Root 目錄內才能運作正常。</p>
+</div>
+</div>
+</div>
+</section>
+<section id="reveal.js-簡報額外特殊-.qmd-語法" class="slide level2 scrollable">
+<h2>Reveal.js 簡報額外特殊 <strong><em>.qmd</em></strong> 語法</h2>
+<ul>
+<li><p>在投影片分隔符號（<code>##</code>）後面加掛 <code>{.scrollable}</code> 可讓該投影片內容長到超出視窗範圍時，出現捲軸(scroll bar)。如果只是要讓某些&lt;div&gt;內容區塊可捲動，在開始內容區塊定義符號（ <code>:::</code>）加上 <code>{style="overflow-y: auto; height: 600px;"}</code> ，height取決於此 <a href="https://quarto.org/docs/presentations/revealjs/advanced.html#presentation-size">reveal.js 的投影片定義高度</a>。</p></li>
+<li><p>投影片內容可<a href="https://quarto.org/docs/presentations/revealjs/#multiple-columns">定義不同比例的多欄位（兩欄位以上）Slide Layout</a>。</p></li>
+<li><p>預設 reveal.js 簡報的文字顯示會靠左對齊，可在 metadata 區塊的 <code>format: revealjs</code> 加入自定義CSS：<br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource yml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href=""></a><span class="pp">--- </span></span>
+<span id="cb6-2"><a href=""></a><span class="fu">format</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb6-3"><a href=""></a><span class="at">  </span><span class="fu">revealjs</span><span class="kw">:</span></span>
+<span id="cb6-4"><a href=""></a><span class="at">    </span><span class="fu">include-in-header</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb6-5"><a href=""></a><span class="fu">      text</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb6-6"><a href=""></a>          &lt;style&gt;</span>
+<span id="cb6-7"><a href=""></a>            .center-xy {</span>
+<span id="cb6-8"><a href=""></a>          margin: 0;</span>
+<span id="cb6-9"><a href=""></a>            position: absolute;</span>
+<span id="cb6-10"><a href=""></a>            top: 50%;</span>
+<span id="cb6-11"><a href=""></a>            left: 50%;</span>
+<span id="cb6-12"><a href=""></a>            -ms-transform: translateY(-50%), translateX(-50%);</span>
+<span id="cb6-13"><a href=""></a>            transform: translateY(-50%), translateX(-50%);</span>
+<span id="cb6-14"><a href=""></a>            }</span>
+<span id="cb6-15"><a href=""></a>            .text-center {</span>
+<span id="cb6-16"><a href=""></a>            text-align: center;</span>
+<span id="cb6-17"><a href=""></a>            }</span>
+<span id="cb6-18"><a href=""></a>          &lt;/style&gt;</span>
+<span id="cb6-19"><a href=""></a><span class="pp">--- </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>然後在需要置中顯示的內容區塊用 <code>::: {.center-xy}</code> 或 <code>::: {.text-center}</code> 即可。</p></li>
+</ul>
 </section></section>
 <section id="使用github-action自動化cicd發佈到github-page" class="title-slide slide level1 center">
 <h1>使用GitHub Action自動化CI/CD發佈到GitHub Page</h1>

@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "Hello World devconf 2025",
     "section": "",
-    "text": "投影片\n\nReveal.js Slides\n\n\n\n\nRAG Quarto 知識庫檢索範例\n\nQuarto Website RAG Demo"
+    "text": "Hello World Dev Conference 2025 “終究要有Markdown何不一開始就Quarto?” 參考資源\n\n投影片\n\nWeb Slides(reveal.js)\n\n\n\n\nRAG Quarto 知識庫檢索範例\n\nQuarto Website RAG Demo"
   },
   {
     "objectID": "quarto_tools_install.html",
@@ -39,6 +39,6 @@
     "href": "quarto_tools_install.html#一些額外工具設定建議",
     "title": "Hello World devconf 2025",
     "section": "一些額外工具/設定建議",
-    "text": "一些額外工具/設定建議\n\n如有在文件內容使用 Jupyter Notebook (Python/R/Julia) Code Cell 功能，參閱 github 說明文件安裝對應的 Python/R/Julia 擴充套件。\n由於 markdown(.md)/quarto(.qmd) 文件中不少格式都是靠 Indent 幾個空白(space)字元來達成效果，建議修改 VSCode 的 Indentation 設定，如此按下 tab 鍵時就會插入2個空白字元，而不是插入一個 tab 字元。\n可安裝 VSCode 的 Vim 擴充套件和 NeoVim 在 VSCode 使用 Vim，打字更有效率。\n\n\n\n\n\n\n\n\nTip\n\n\n\n建議把 VSCode Copilot AI “NES (Next Edit Suggestion)” 的功能關掉，因為如果在 VSCode 裡面編輯中英文混雜的 markdown / quarto 文件時，按下tab鍵接受 AI 建議修改時常常不察，就把整個句中的中文全型括號（）以及半形()符號亂換混掉，於是 hyperlink 或 img 語法就壞掉了。"
+    "text": "一些額外工具/設定建議\n\n如有在文件內容使用 Jupyter Notebook (Python/R/Julia) Code Cell 功能，參閱 github 說明文件安裝對應的 Python/R/Julia 擴充套件。\n由於 markdown(.md)/quarto(.qmd) 文件中不少格式都是靠 Indent 幾個空白(space)字元來達成效果，建議修改 VSCode 的 Indentation 設定，如此按下 tab 鍵時就會插入2個空白字元，而不是插入一個 tab 字元。\n可安裝 VSCode 的 Vim 擴充套件和 NeoVim 在 VSCode 使用 Vim，打字更有效率。"
   }
 ]
