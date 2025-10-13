@@ -44,7 +44,7 @@ format: html
 
 此外也可在[ ***.qmd*** 文件內容中直接使用純 HTML 語法](https://quarto.org/docs/authoring/markdown-basics.html#raw-content){target="_blank"}。
 
-## Quarto Markdown 支援的額外語法 
+## Quarto Markdown 額外語法 
 
 * 表格除了原本 Markdown table 語法外，還支援 [Grid 表格語法](https://quarto.org/docs/authoring/tables.html#grid-tables)，多行表頭、表格內換行等比標準 Markdown 更強的功能。
 * [Callout block 語法](https://quarto.org/docs/authoring/markdown-basics.html#callout-blocks)會產生有特定樣式的區塊：  

@@ -24,8 +24,8 @@
 
 ### PowerPoint/Word:
 
-* 輸出 PowerPoint/Word 檔案需先使用 pandoc 子命令產生對應的範本檔案(.docx/.pptx)，用 Quarto CLI 指令： `quarto pandoc -o 欲產生範本檔名[.docx|.pptx] --print-default-data-file reference[.docx|pptx]` 來產範本檔。
-* Word/PowerPoint範本檔內的 ["樣式（Stylew"](https://support.microsoft.com/zh-tw/office/customize-or-create-new-styles-d38d6e47-f6fc-48eb-a607-1eb120dec563) 會對應到 ***.qmd*** 檔中指定的 `::: {.class_name}` 格式設定，修改範本檔的 Style 可改變輸出文件的樣式。
+* 輸出 PowerPoint/Word 檔案需先使用 pandoc 子命令產生對應的範本檔案(.docx/.pptx)，用 Quarto CLI 指令： `quarto pandoc -o 欲產生範本檔名[.docx|.pptx] --print-default-data-file reference[.docx|pptx]` 產範本檔，然後就可於 Quarto 專案的 `_quarto.yml` 全域設定檔或 .qmd 檔的 YAML Metadata 標頭區域設定 `reference-doc: 範本檔`。
+* Word/PowerPoint範本檔內的 ["樣式（Style）"](https://support.microsoft.com/zh-tw/office/customize-or-create-new-styles-d38d6e47-f6fc-48eb-a607-1eb120dec563) 會對應到 ***.qmd*** 檔中指定的 `::: {.class_name}` 格式設定，修改範本檔的 Style 可改變輸出文件的樣式。<br/>![]({{< meta part2_img_prefix >}}pics/modify_docx_style.png){fig-align="center"}
    
   ::: {.callout-note}
   Quarto 的 Callout block 沒有對應到 Word(.docx) 的預設範本檔輸出樣式中，但可自行定義 Word Style 樣式來對應產生輸出於 Word 文件檔的內容。
