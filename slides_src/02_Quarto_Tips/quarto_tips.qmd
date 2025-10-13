@@ -111,11 +111,11 @@ format: html
 
 Quarto 支援[條件內容 (Conditional Content)](https://quarto.org/docs/authoring/conditional.html)，可根據輸出格式、目前使用的 [Project Profile](https://quarto.org/docs/projects/profiles.html#profile-content) 來決定是否顯示指定區塊內容。
 
-藉由此語法可控制在不同輸出格式中顯示不同內容，例如[本簡報的Part1原始碼63~71行](https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/slides_src/01_Tool_Setup/install_tools.qmd#L63-L71)：
+藉由此語法可控制在不同輸出格式中顯示不同內容，例如[本簡報的Part1原始碼59~71行](https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/slides_src/01_Tool_Setup/install_tools.qmd#L59-L71)：
 
 ![]({{< meta part2_img_prefix >}}pics/conditional_content_demo.png){fig-align="center"}
 
-這樣就可以在輸出為整頁 HTML Page 的 Quarto 相關工具安裝文件時藏起這段建議把 AI Completion 功能關掉的說明文字，避免離題。
+這樣就可以在輸出為整頁 HTML Page 的 Quarto 相關工具安裝文件時藏起後續說明文字，避免離題。
 
 ## 引入其他 ***.qmd*** 文件內容 (Including Content)
 
