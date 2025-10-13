@@ -309,7 +309,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#vscode-quarto-extension" id="toc-vscode-quarto-extension" class="nav-link" data-scroll-target="#vscode-quarto-extension">VSCode &amp; Quarto Extension</a></li>
   <li><a href="#一些額外工具設定建議" id="toc-一些額外工具設定建議" class="nav-link" data-scroll-target="#一些額外工具設定建議">一些額外工具/設定建議</a></li>
-  <li><a href="#使用-quarto-撰寫文件" id="toc-使用-quarto-撰寫文件" class="nav-link" data-scroll-target="#使用-quarto-撰寫文件">使用 Quarto 撰寫文件</a></li>
   </ul>
 </nav>
     </div>
@@ -375,16 +374,6 @@ Tip
 <p>建議把 VSCode <a href="https://code.visualstudio.com/docs/copilot/ai-powered-suggestions#_enable-or-disable-code-completions">Copilot AI “#NES (Next Edit Suggestion)”</a> 的功能關掉，因為如果在 VSCode 裡面編輯中英文混雜的 markdown / quarto 文件時，按下tab鍵接受 AI 建議修改時常常不察，就把整個句中的中文全型括號（）以及半形()符號亂換混掉，於是 hyperlink 或 img 語法就壞掉了。</p>
 </div>
 </div>
-</section>
-<section id="使用-quarto-撰寫文件" class="level2">
-<h2 class="anchored" data-anchor-id="使用-quarto-撰寫文件">使用 Quarto 撰寫文件</h2>
-<p>上述的工具安裝完成後，當在 VSCode 中開啟並編輯 <strong><em>.qmd</em></strong> 文件內容時，就可以 Windows 按 <code>Ctrl+Shift+K</code>， MacOS 按 <code>Command(⌘)+Shift+K</code>顯示文件的渲染結果。</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/part01/pics/vscode_quarto_preview.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-<p>這其實就是用 Quarto CLI 的 <a href="https://quarto.org/docs/projects/code-execution.html#incremental-render"><code>quarto render</code></a> 指令來渲染文件內容，並在 VSCode 開啟右分頁顯示結果。</p>
 
 
 </section>
