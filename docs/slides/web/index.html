@@ -489,8 +489,8 @@ format: html
 <p>除了在大括號 { }中套用定義在 CSS 檔案的 CSS 樣式外，也可直接寫<code>{style="..."}</code>來指定 tag 的 CSS inline style。</p>
 <p>此外也可在<a href="https://quarto.org/docs/authoring/markdown-basics.html#raw-content" target="_blank"><strong><em>.qmd</em></strong> 文件內容中直接使用純 HTML 語法</a>。</p>
 </section>
-<section id="quarto-markdown-支援的額外語法" class="slide level2">
-<h2>Quarto Markdown 支援的額外語法</h2>
+<section id="quarto-markdown-額外語法" class="slide level2">
+<h2>Quarto Markdown 額外語法</h2>
 <ul>
 <li><p>表格除了原本 Markdown table 語法外，還支援 <a href="https://quarto.org/docs/authoring/tables.html#grid-tables">Grid 表格語法</a>，多行表頭、表格內換行等比標準 Markdown 更強的功能。</p></li>
 <li><p><a href="https://quarto.org/docs/authoring/markdown-basics.html#callout-blocks">Callout block 語法</a>會產生有特定樣式的區塊：</p>
@@ -555,9 +555,9 @@ format: html
 </div>
 </div>
 </section>
-<section id="條件內容-conditional-content" class="slide level2">
-<h2>條件內容 (Conditional Content)</h2>
-<p>Quarto 支援<a href="https://quarto.org/docs/authoring/conditional.html">條件內容 (Conditional Content)</a>，可根據輸出格式、目前使用的 <a href="https://quarto.org/docs/projects/profiles.html#profile-content">Project Profile</a> 來決定是否顯示指定區塊內容。</p>
+<section id="條件式內容-conditional-content" class="slide level2">
+<h2>條件式內容 (Conditional Content)</h2>
+<p>Quarto 支援<a href="https://quarto.org/docs/authoring/conditional.html">條件式內容 (Conditional Content)</a>，可根據輸出格式、目前使用的 <a href="https://quarto.org/docs/projects/profiles.html#profile-content">Project Profile</a> 來決定是否顯示指定區塊內容。</p>
 <p>藉由此語法可控制在不同輸出格式中顯示不同內容，例如<a href="https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/slides_src/01_Tool_Setup/install_tools.qmd#L59-L71">本簡報的Part1原始碼59~71行</a>：</p>
 
 <img data-src="02_Quarto_Tips/pics/conditional_content_demo.png" class="quarto-figure quarto-figure-center r-stretch"><p>這樣就可以在輸出為整頁 HTML Page 的 Quarto 相關工具安裝文件時藏起後續說明文字，避免離題。</p>
@@ -608,14 +608,129 @@ format: html
 <span id="cb6-19"><a href=""></a><span class="pp">--- </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>然後在需要置中顯示的內容區塊用 <code>::: {.center-xy}</code> 或 <code>::: {.text-center}</code> 即可。</p></li>
 </ul>
+</section>
+<section id="quarto-project" class="slide level2">
+<h2>Quarto Project</h2>
+<p><span class="small">Quarto render 有分為單檔輸出模式以及使用 <a href="https://quarto.org/docs/projects/quarto-projects.html">Quarto Project 專案</a>輸出模式，專案模式的功能較多，可讓多 <strong><em>.qmd</em></strong> 檔共用設定、定義 metadata / <a href="https://quarto.org/docs/authoring/variables.html">var變數</a>、<a href="https://quarto.org/docs/projects/profiles.html">Project Profile</a>、執行 <a href="https://quarto.org/docs/projects/scripts.html">Project scripts</a> 等功能。</span></p>
+<p>專案可用 Quarto CLI 指令 或 VSCode Quarto 擴充套件來建立:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="02_Quarto_Tips/pics/quarto_cli_create_project.png"></p>
+<figcaption>quarto create project</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="02_Quarto_Tips/pics/vscode_create_quarto_project.png"></p>
+<figcaption>VSCode Quarto 擴充套件建立專案</figcaption>
+</figure>
+</div>
+</div></div>
+<p>建立專案後，會在該目錄下產生一個 <strong><em><em>quarto.yml</em></em></strong> 的設定檔，在此檔案中操作專案全域metadata/變數和設定選項。</p>
+</section>
+<section id="匯出多種格式文件" class="slide level2 scrollable">
+<h2>匯出多種格式文件</h2>
+<h3 id="pdf">PDF:</h3>
+<ul>
+<li>輸出 PDF 檔案需要 LaTeX 環境（目前預設使用 <a href="https://yihui.org/tinytex/">TinyTex</a>）</li>
+<li>如果原始 <strong><em>.qmd</em></strong> 檔內容有中/日/韓文(CJK)，需要<a href="https://quarto.org/docs/output-formats/pdf-basics.html#unicode-characters">在 metadata 中加入 <code>mainfont</code> 設定，指定系統中已安裝的CJK字型</a>，以免PDF內容出現亂碼。</li>
+</ul>
+<h3 id="powerpointword">PowerPoint/Word:</h3>
+<ul>
+<li><p>輸出 PowerPoint/Word 檔案需先使用 pandoc 子命令產生對應的範本檔案(.docx/.pptx)，用 Quarto CLI 指令： <code>quarto pandoc -o 欲產生範本檔名[.docx|.pptx] --print-default-data-file reference[.docx|pptx]</code> 產範本檔，然後就可於 Quarto 專案的 <code>_quarto.yml</code> 全域設定檔或 .qmd 檔的 YAML Metadata 標頭區域設定 <code>reference-doc: 範本檔</code>。</p></li>
+<li><p>Word/PowerPoint範本檔內的 <a href="https://support.microsoft.com/zh-tw/office/customize-or-create-new-styles-d38d6e47-f6fc-48eb-a607-1eb120dec563">“樣式（Style）”</a> 會對應到 <strong><em>.qmd</em></strong> 檔中指定的 <code>::: {.class_name}</code> 格式設定，修改範本檔的 Style 可改變輸出文件的樣式。<br><img data-src="02_Quarto_Tips/pics/modify_docx_style.png" class="quarto-figure quarto-figure-center"></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Quarto 的 Callout block 沒有對應到 Word(.docx) 的預設範本檔輸出樣式中，但可自行定義 Word Style 樣式來對應產生輸出於 Word 文件檔的內容。</p>
+</div>
+</div>
+</div></li>
+<li><p>受制於 Pandoc 的 Word/PowerPoint 輸出功能較簡單，無法支援 Quarto 的所有格式設定。</p></li>
+</ul>
 </section></section>
+<section>
 <section id="使用github-action自動化cicd發佈到github-page" class="title-slide slide level1 center">
 <h1>使用GitHub Action自動化CI/CD發佈到GitHub Page</h1>
 
 </section>
-
+<section id="github-action-自動化cicd發佈到github-page" class="slide level2">
+<h2>GitHub Action 自動化CI/CD發佈到GitHub Page</h2>
+<p>官方提供可讓我們使用 GitHub 做原始碼控管的 Quarto 專案快速地建立自動化發佈文件到幾個<a href="https://quarto.org/docs/publishing/">官方支援的出版網站</a>。</p>
+<p>GitHub Action Repo : <a href="https://github.com/quarto-dev/quarto-actions" class="uri">https://github.com/quarto-dev/quarto-actions</a></p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>使用 GitHub Action 自動化發佈 Quarto 文件到 GitHub Page 有<a href="https://quarto.org/docs/publishing/github-pages.html"><strong>官方說明</strong></a>，照樣操作就可以順利發佈到 GitHub Pages 上。<br>或者參考其 GitHub Repo 上的<a href="https://github.com/quarto-dev/quarto-actions/tree/main/examples">範例教學</a>以及拿<a href="https://github.com/quarto-dev/quarto-actions/blob/main/examples/quarto-publish-example.yml">範例GitHub Action YAML設定檔 <code>quarto-publish-example.yml</code></a>來配合修改。</p>
+</div>
+</div>
+</div>
+</section>
+<section id="github-action-進階設定" class="slide level2 scrollable">
+<h2>GitHub Action 進階設定</h2>
+<ul>
+<li><p>如 <strong><em>.qmd</em></strong> 文件中有使用到 <a href="https://quarto.org/docs/computations/inline-code.html">Jupyter Inline Code 程式碼區塊</a>，需額外增加一個安裝 Python 的步驟，然後<a href="https://pypi.org/project/jupyter/">使用 PIP 安裝 Jupyter 套件</a>：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href=""></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Python</span></span>
+<span id="cb7-2"><a href=""></a><span class="at">   </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v4</span></span>
+<span id="cb7-3"><a href=""></a><span class="at">   </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb7-4"><a href=""></a><span class="at">     </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.x'</span></span>
+<span id="cb7-5"><a href=""></a><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> pip install jupyter</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>如有使用到 Quarto project profile / 需指定輸出格式的話，使用 <strong><code>QUARTO_PROFILE</code></strong> 環境變數指定 profile 名稱，和 <code>with: to:</code> 的 YAML 設定來指定輸出格式，例如本簡報自身的 quarto render 設定：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href=""></a><span class="at"> </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Render Hello World DevConf 2025 slides</span></span>
+<span id="cb8-2"><a href=""></a><span class="at">   </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/render@v2</span></span>
+<span id="cb8-3"><a href=""></a><span class="at">   </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb8-4"><a href=""></a><span class="at">     </span><span class="fu">QUARTO_PROFILE</span><span class="kw">:</span><span class="at"> webslide</span></span>
+<span id="cb8-5"><a href=""></a><span class="at">   </span><span class="fu">with</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb8-6"><a href=""></a><span class="at">     </span><span class="fu">path</span><span class="kw">:</span><span class="at"> slides_src</span></span>
+<span id="cb8-7"><a href=""></a><span class="at">     </span><span class="fu">to</span><span class="kw">:</span><span class="at"> revealjs</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>那個 <code>to:</code> 的設定值會對應到 Quarto 官方參考文件中輸出格式的名稱，如 <code>revealjs</code>、<code>html</code>、<code>pdf</code>、<code>docx</code>、<code>gfm</code> 等，以下是<a href="https://quarto.org/docs/reference/formats/presentations/pptx.html">輸出 PowerPoint 的參考網頁</a>截圖： <img data-src="?meta:part3_img_prefixpics/quarto_export_format_help_page.png"></p></li>
+<li><p>如果有多個專案需要發佈到同一個 GitHub Pages 網站，可先個別 Quarto 專案呼叫 quarto render 的 GitHub Action 完成之後，再使用 <code>run:</code> 的 Shell 指令將多個專案的輸出目錄複製到主要專案的輸出目錄，然後再跑 publish action，例如以下範例設定：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href=""></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Copy slides asseets to demo_website</span></span>
+<span id="cb9-2"><a href=""></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb9-3"><a href=""></a>      mkdir -p demo_website/_site/docs/slides</span>
+<span id="cb9-4"><a href=""></a>      cp -r slides_src/docs/* demo_website/_site/docs/</span>
+<span id="cb9-5"><a href=""></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Publish to GitHub Pages</span></span>
+<span id="cb9-6"><a href=""></a><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/publish@v2</span></span>
+<span id="cb9-7"><a href=""></a><span class="at"> </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb9-8"><a href=""></a><span class="at">     </span><span class="fu">target</span><span class="kw">:</span><span class="at"> gh-pages</span></span>
+<span id="cb9-9"><a href=""></a><span class="at">     </span><span class="fu">path</span><span class="kw">:</span><span class="at"> demo_website</span></span>
+<span id="cb9-10"><a href=""></a><span class="at">     </span><span class="fu">render</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="at"> </span></span>
+<span id="cb9-11"><a href=""></a><span class="at"> </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb9-12"><a href=""></a><span class="at">     </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul>
+</section></section>
 <section id="ragnar套件打造自己的rag-ai知識庫檢索系統" class="title-slide slide level1 center">
 <h1>RAGNAR套件打造自己的RAG AI知識庫檢索系統</h1>
+
+</section>
+
+<section id="q-a" class="title-slide slide level1 center">
+<h1>Q &amp; A</h1>
+<div class="columns">
+<div class="column" style="width:25%;">
+<div class="text-center">
+<p>Any Questions?<br>🙋‍♂️🙋‍♀️🙋</p>
+</div>
+</div><div class="column" style="width:75%;">
+<div style="overflow-y: scroll; height: 920px;">
+<p><img data-src="./pics/you_go_to_find_reference.png" style="width:85.0%"></p>
+</div>
+</div></div>
 
 </section>
     </div>
