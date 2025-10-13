@@ -2,9 +2,11 @@
 title: "Hello World devconf 2025"
 ---
 
+Hello World Dev Conference 2025 "[終究要有Markdown何不一開始就Quarto?](https://hwdc.ithome.com.tw/2025/session-page/4052)" 參考資源
+
 # 投影片
 
-* [Reveal.js Slides](./docs/slides/web/#/title-slide){target="_blank"}
+* [Web Slides(_reveal.js_)](./docs/slides/web/#/title-slide){target="_blank"}
 
 ---
 

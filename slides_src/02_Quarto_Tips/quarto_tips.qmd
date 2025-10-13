@@ -1,3 +1,6 @@
+---
+# 
+---
 ## Quarto (***.qmd***) 文件撰寫技巧
 
 ***.qmd*** 文件語法其實就是 Markdown (***.md***) 語法的超集合，支援更多功能，通常檔案內容會類似：
@@ -44,6 +47,114 @@ format: html
 
 此外也可在[ ***.qmd*** 文件內容中直接使用純 HTML 語法](https://quarto.org/docs/authoring/markdown-basics.html#raw-content){target="_blank"}。
 
-## 
+## Quarto Markdown 支援的額外語法 
 
-表格的語法除了原本 Markdown 的語法外，還支援 Pandoc 的表格語法，像是多行表頭、表格內換行、表格內插入圖片等功能。
+* 表格除了原本 Markdown table 語法外，還支援 [Grid 表格語法](https://quarto.org/docs/authoring/tables.html#grid-tables)，多行表頭、表格內換行等比標準 Markdown 更強的功能。
+* [Callout block 語法](https://quarto.org/docs/authoring/markdown-basics.html#callout-blocks)會產生有特定樣式的區塊：  
+  
+  ::: {.callout-note}
+  這是 note 樣式的 callout block
+  :::
+  
+  寫法：
+   
+   ```{style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+   ::: {.callout-note}
+   這是 note 樣式的 callout block
+   :::
+   ```
+   
+  有 `note`、`tip`、`warning`、`caution`、`important` 多種樣式與圖示。
+* [Shortcodes](https://quarto.org/docs/authoring/shortcodes.html) 可在內容於 `quarto render` 時插入 [Quarto project 定義的變數內容](https://quarto.org/docs/authoring/variables.html)。
+* 程式碼語法區塊支援[註解標示(_Code Annotation_)](https://quarto.org/docs/authoring/code-annotation.html)。
+
+## {.scrollable}
+
+程式碼區塊的內容後面加上 `空白字元+該語言使用的單行註解語法+空白字元+<號碼>` 為該行程式碼加上[註解標示(_Code Annotation_)](https://quarto.org/docs/authoring/code-annotation.html)，例如：
+
+***.qmd***程式碼區塊：
+
+````{style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+```json
+    "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+        "title": "Bundled pwsh",
+        "path": "D:\\vscode_portable\\PowerShell-x64\\pwsh.exe",
+        "args": [
+        "-nol",
+        "-nop",                                                                         // <1>
+        "-noe",
+        "-ex",
+        "RemoteSigned",
+        "-Command",                                                                     // <2>
+        "Invoke-expression \". D:\\vscode_portable\\pwsh-scripts\\Set-PwshTools.ps1\""  // <2>
+        ]
+    }
+    },
+1. 使用 `-nop` 參數避免執行目前系統/使用者等級的 PowerShell Profile 設定檔
+2. 執行 `Invoke-Expression ". D:\vscode_portable\pwsh-scripts\Set-PwshTools.ps1"` 來替代。
+```
+````
+
+顯示效果：
+
+::: {fig-align="center"}
+
+![HTML輸出]({{< meta part2_img_prefix >}}pics/html_code_annotation_effect.png)
+
+
+![Reveal.js網頁簡報輸出]({{< meta part2_img_prefix >}}pics/revealjs_code_annotation_effect.png)
+
+:::
+
+## 條件內容 (Conditional Content)
+
+Quarto 支援[條件內容 (Conditional Content)](https://quarto.org/docs/authoring/conditional.html)，可根據輸出格式、目前使用的 [Project Profile](https://quarto.org/docs/projects/profiles.html#profile-content) 來決定是否顯示指定區塊內容。
+
+藉由此語法可控制在不同輸出格式中顯示不同內容，例如[本簡報的Part1原始碼63~71行](https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/slides_src/01_Tool_Setup/install_tools.qmd#L63-L71)：
+
+![]({{< meta part2_img_prefix >}}pics/conditional_content_demo.png){fig-align="center"}
+
+這樣就可以在輸出為整頁 HTML Page 的 Quarto 相關工具安裝文件時藏起這段建議把 AI Completion 功能關掉的說明文字，避免離題。
+
+## 引入其他 ***.qmd*** 文件內容 (Including Content)
+
+Quarto 支援在 ***.qmd*** 文件的內容中[引入其他 ***.qmd*** 文件內容](https://quarto.org/docs/authoring/includes.html)，達到 ***.qmd** 檔內容 re-use 的目的。
+
+本簡報的 Quarto 相關工具安裝說明內容就是利用此引入機制[在資源網站(demo_website)上重用以 HTML Page 輸出](https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/demo_website/quarto_tools_install.qmd#L10)。
+
+![]({{< meta part2_img_prefix >}}pics/include_content_demo.png){fig-align="center"}
+
+::: {.callout-important}
+此機制需配合 [Quarto Project](https://quarto.org/docs/projects/quarto-projects.html) 機制，定義的路徑起點是 Project Root 目錄位置（存 `_quarto.yml` 檔案的目錄）為準，在 Project Root 目錄以外的非 ***.qmd*** 檔案在被 `{{< include "..." >}}` 的 ***.qmd*** 內容中無法正確 reference ， Quarto 在 render 時不會去拷貝那些檔案到輸出位置，需自行撰寫 ***Project pre-render script** 先手動複製到目前 Project Root 目錄內才能運作正常。
+:::
+
+## Reveal.js 簡報額外特殊 ***.qmd*** 語法{.scrollable}
+
+* 在投影片分隔符號（`##`）後面加掛 `{.scrollable}` 可讓該投影片內容長到超出視窗範圍時，出現捲軸(scroll bar)。如果只是要讓某些&lt;div&gt;內容區塊可捲動，在開始內容區塊定義符號（ `:::`）加上 `{style="overflow-y: auto; height: 600px;"}` ，height取決於此 [reveal.js 的投影片定義高度](https://quarto.org/docs/presentations/revealjs/advanced.html#presentation-size)。
+* 投影片內容可[定義不同比例的多欄位（兩欄位以上）Slide Layout](https://quarto.org/docs/presentations/revealjs/#multiple-columns)。
+* 預設 reveal.js 簡報的文字顯示會靠左對齊，可在 metadata 區塊的 `format: revealjs` 加入自定義CSS：<br/>
+   
+  ```yml
+  --- 
+  format: 
+    revealjs:
+      include-in-header: 
+        text: |
+            <style>
+              .center-xy {
+            margin: 0;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              -ms-transform: translateY(-50%), translateX(-50%);
+              transform: translateY(-50%), translateX(-50%);
+              }
+              .text-center {
+              text-align: center;
+              }
+            </style>
+  --- 
+  ```
+
+  然後在需要置中顯示的內容區塊用 `::: {.center-xy}` 或 `::: {.text-center}` 即可。

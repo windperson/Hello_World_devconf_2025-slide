@@ -56,11 +56,11 @@ conda install conda-forge::quarto
 
 :::
 
+:::: {.content-visible when-format="revealjs"}
 :::{.callout-tip}
 建議把 VSCode [Copilot  AI "NES (Next Edit Suggestion)"]( https://code.visualstudio.com/docs/copilot/ai-powered-suggestions#_enable-or-disable-code-completions) 的功能關掉，因為如果在 VSCode 裡面編輯中英文混雜的 markdown / quarto 文件時，按下tab鍵接受 AI 建議修改時常常不察，就把整個句中的中文全型括號（）以及半形()符號亂換混掉，於是 hyperlink 或 img 語法就壞掉了。
 :::
 
-::: {.content-visible when-format="revealjs"}
 ## 使用 Quarto 撰寫文件
 
 上述的工具安裝完成後，當在 VSCode 中開啟並編輯 ***.qmd*** 文件內容時，就可以 Windows 按 `Ctrl+Shift+K`， MacOS 按 `Command(⌘)+Shift+K`顯示文件的渲染結果。
@@ -68,4 +68,4 @@ conda install conda-forge::quarto
 ![]({{< meta part1_img_prefix >}}pics/vscode_quarto_preview.png){fig-align="center"}
 
 這其實就是用 Quarto CLI 的 [`quarto render`](https://quarto.org/docs/projects/code-execution.html#incremental-render) 指令來渲染文件內容，並在 VSCode 開啟右分頁顯示結果。 
-:::
+::::
