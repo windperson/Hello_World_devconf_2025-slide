@@ -140,7 +140,25 @@ Quarto 讓寫文件內容統一於 Quarto 的 Markdown 格式（***.qmd***）檔
 
 # 使用GitHub Action自動化CI/CD發佈到GitHub Page
 
+{{< include "03_GitHub_Pages_Publish/_github_action_setup.qmd" >}}
 
 # RAGNAR套件打造自己的RAG AI知識庫檢索系統
 
+# Q & A
 
+:::: {.columns}
+::: {.column width="25%"}
+
+:::: {.text-center}
+Any Questions?<br/>🙋‍♂️🙋‍♀️🙋
+::::
+
+:::
+::: {.column width="75%"}
+
+::: {style="overflow-y: scroll; height: 920px;"}
+![](./pics/you_go_to_find_reference.png){width=85%}
+:::
+
+:::
+::::
