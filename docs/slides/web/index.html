@@ -248,7 +248,7 @@
 </section>
 <section id="what-is-quarto" class="slide level2">
 <h2>What is Quarto?</h2>
-<p>Quarto(唸”闊拓”) is an open-source (MIT license) scientific and technical publishing system built on <a href="https://pandoc.org/">Pandoc</a> via extended markdown format (<strong><em>.qmd</em></strong>) files. It allows you to create dynamic documents, reports, presentations, and websites using a single authoring framework. Quarto supports multiple programming languages, including R, Python, and Julia, making it a versatile tool for data analysis and visualization.</p>
+<p><img data-src="./pics/quarto.png" style="width:20.0%">(唸”闊拓”) is an open-source (MIT license) scientific and technical publishing system built on <a href="https://pandoc.org/">Pandoc</a> via extended markdown format (<strong><em>.qmd</em></strong>) files. It allows you to create dynamic documents, reports, presentations, and websites using a single authoring framework. Quarto supports multiple programming languages, including R, Python, and Julia, making it a versatile tool for data analysis and visualization.</p>
 <ul>
 <li><p>Official website: <a href="https://quarto.org/">quarto.org</a></p></li>
 <li><p>Github repo: <a href="https://github.com/quarto-dev/">github.com/quarto-dev/</a></p></li>
@@ -361,6 +361,26 @@ Table&nbsp;1: Quarto 輸出格式
 </div>
 </figure>
 </div>
+</section>
+<section id="why-use-quarto" class="slide level2">
+<h2>Why Use Quarto?</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>身為碼農，最討厭的就是<span style="font-size: 130%"><strong><em>寫文件</em></strong></span>，寫一堆各式各樣格式的文件，還有些檔案格式:</p>
+<ol type="1">
+<li>無法有效版控/比對檔案。<br></li>
+<li>表達某些內容種類<br>(source code/execution result)不友善得花時間截圖/手兜。</li>
+</ol>
+<p>整個就是麻煩事。</p>
+</div><div class="column" style="width:40%;">
+<p><img data-src="pics/programmers_hate_documentation.png"></p>
+</div></div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<p>Quarto 讓寫文件內容統一於 Quarto 的 Markdown 格式（<strong><em>.qmd</em></strong>）檔案，再<br><span style="font-size: 110%"><strong>一份原始文件內容多種格式輸出</strong></span>(HTML/PDF/Word/PowerPoint/…)，減少寫文件的麻煩事。</p>
+
+<img data-src="pics/quarto_workflow.svg" class="quarto-figure quarto-figure-center r-stretch"><p>類似跨平台開發框架/遊戲引擎，寫一次原始碼，編譯成多平台的執行檔。</p>
 <!-- included content -->
 </section></section>
 <section>
@@ -424,11 +444,55 @@ Table&nbsp;1: Quarto 輸出格式
 
 <img data-src="01_Tool_Setup/pics/vscode_quarto_preview.png" class="quarto-figure quarto-figure-center r-stretch"><p>這其實就是用 Quarto CLI 的 <a href="https://quarto.org/docs/projects/code-execution.html#incremental-render"><code>quarto render</code></a> 指令來渲染文件內容，並在 VSCode 開啟右分頁顯示結果。</p>
 </section></section>
+<section>
 <section id="quarto撰寫技巧發佈至各種不同類型文件-htmlpdfpowerpointword" class="title-slide slide level1 center">
 <h1>Quarto撰寫技巧/發佈至各種不同類型文件<br>(HTML/PDF/PowerPoint/Word)</h1>
 
 </section>
+<section id="quarto-.qmd-文件撰寫技巧" class="slide level2">
+<h2>Quarto (<strong><em>.qmd</em></strong>) 文件撰寫技巧</h2>
+<p><strong><em>.qmd</em></strong> 文件語法其實就是 Markdown (<strong><em>.md</em></strong>) 語法的超集合，支援更多功能，通常檔案內容會類似：</p>
+<div style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<pre><code>---
+# 這是 .qmd 的 metadata 區塊
+# 此區塊使用 YAML 語法可設定title/logo/footer/輸出文件格式參數&amp;其他 Quarto project 選項等 
+title: "文件標題"
+format: html
+---
 
+## 章節標題
+### 小節標題
+
+這是文件內容，可使用 **粗體**、*斜體*、`程式碼` 等等 Markdown 語法，也可加入 &lt;br/&gt; 進行強制換行。
+
+&lt;!-- 不會產出於輸出文件的註解 --&gt;
+
+[超連結顯示文字](超連結網址){target="_blank"} &lt;!-- target="_blank" 讓超連結開新視窗 --&gt;
+
+![](圖檔/SVG檔路徑){fig-align="center" width="50%"} &lt;!-- 圖片置中，寬度50% --&gt;
+
+::: {.css_class_name}
+此區塊內容輸出會被包在HTML &lt;div&gt; tag 中，css_class_name 可用來指定 div tag 使用的 CSS 樣式。
+:::
+
+[此文字輸出會被包在 HTML &lt;span&gt; tag 中，且套用 another_css 的 CSS 樣式]{.another_css}
+
+&lt;!-- 使用 --- 且前後都各空一行會產生水平分隔線 --&gt;
+
+---
+
+可使用 Pandoc 語法提供的 Footnote[^1] 功能。
+
+[^1]: 這是註腳內容，可換行，會自動編號。
+</code></pre>
+</div>
+<p>除了在大括號 { }中套用定義在 CSS 檔案的 CSS 樣式外，也可直接寫<code>{style="..."}</code>來指定 tag 的 CSS inline style。</p>
+<p>此外也可在<a href="https://quarto.org/docs/authoring/markdown-basics.html#raw-content" target="_blank"><strong><em>.qmd</em></strong> 文件內容中直接使用純 HTML 語法</a>。</p>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<p>表格的語法除了原本 Markdown 的語法外，還支援 Pandoc 的表格語法，像是多行表頭、表格內換行、表格內插入圖片等功能。</p>
+</section></section>
 <section id="使用github-action自動化cicd發佈到github-page" class="title-slide slide level1 center">
 <h1>使用GitHub Action自動化CI/CD發佈到GitHub Page</h1>
 
