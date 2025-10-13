@@ -55,7 +55,8 @@ code-annotations: below
 
 ## What is Quarto?
 
-Quarto(唸"闊拓") is an open-source (MIT license) scientific and technical publishing system built on [Pandoc](https://pandoc.org/) via extended markdown format (***.qmd***) files. It allows you to create dynamic documents, reports, presentations, and websites using a single authoring framework. Quarto supports multiple programming languages, including R, Python, and Julia, making it a versatile tool for data analysis and visualization.
+![](./pics/quarto.png){width=20%}(唸"闊拓") is an open-source (MIT license) scientific and technical publishing system built on [Pandoc](https://pandoc.org/) via extended markdown format (***.qmd***) files. It allows you to create dynamic documents, reports, presentations, and websites using a single authoring framework. Quarto supports multiple programming languages, including R, Python, and Julia, making it a versatile tool for data analysis and visualization.
+
 
 * Official website: [quarto.org](https://quarto.org/)
 
@@ -98,6 +99,33 @@ Quarto(唸"闊拓") is an open-source (MIT license) scientific and technical pub
 Quarto 輸出格式
 :::
 
+## Why Use Quarto?
+
+:::: {.columns}
+
+::: {.column width="60%"}
+身為碼農，最討厭的就是[***寫文件***]{style="font-size: 130%"}，寫一堆各式各樣格式的文件，還有些檔案格式:
+
+1. 無法有效版控/比對檔案。<br/>
+2. 表達某些內容種類<br/>(source code/execution result)<br/>不友善得花時間螢幕截圖/手工兜。
+
+整個就是麻煩事。
+:::
+
+::: {.column width="40%"}
+![](pics/programmers_hate_documentation.png)
+:::
+
+::::
+
+## 
+
+Quarto 讓寫文件內容統一於 Quarto 的 Markdown 格式（***.qmd***）檔案，再<br/>[**一份原始文件內容多種格式輸出**]{style="font-size: 110%"}(HTML/PDF/Word/PowerPoint/...)，減少寫文件的麻煩事。
+
+![](pics/quarto_workflow.svg){fig-align="center"}
+
+類似跨平台開發框架/遊戲引擎，寫一次原始碼，編譯成多平台的執行檔。
+
 <!-- included content -->
 
 # 在macOS/Windows環境安裝&使用Quarto
@@ -105,6 +133,8 @@ Quarto 輸出格式
 {{< include "01_Tool_Setup/install_tools.qmd" >}}
 
 # Quarto撰寫技巧/發佈至各種不同類型文件<br/>(HTML/PDF/PowerPoint/Word)
+
+{{< include "02_Quarto_Tips/quarto_tips.qmd" >}}
 
 
 # 使用GitHub Action自動化CI/CD發佈到GitHub Page

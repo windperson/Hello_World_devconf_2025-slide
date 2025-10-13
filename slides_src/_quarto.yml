@@ -8,3 +8,4 @@ profile:
 
 # picture url prefix
 part1_img_prefix: "./01_Tool_Setup/"
+part2_img_prefix: "./02_Quarto_Hints/"

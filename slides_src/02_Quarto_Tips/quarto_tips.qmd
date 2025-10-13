@@ -1,0 +1,49 @@
+## Quarto (***.qmd***) 文件撰寫技巧
+
+***.qmd*** 文件語法其實就是 Markdown (***.md***) 語法的超集合，支援更多功能，通常檔案內容會類似：
+
+:::{style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"}
+
+```
+---
+# 這是 .qmd 的 metadata 區塊
+# 此區塊使用 YAML 語法可設定title/logo/footer/輸出文件格式參數&其他 Quarto project 選項等 
+title: "文件標題"
+format: html
+---
+
+## 章節標題
+### 小節標題
+
+這是文件內容，可使用 **粗體**、*斜體*、`程式碼` 等等 Markdown 語法，也可加入 <br/> 進行強制換行。
+
+<!-- 不會產出於輸出文件的註解 -->
+
+[超連結顯示文字](超連結網址){target="_blank"} <!-- target="_blank" 讓超連結開新視窗 -->
+
+![](圖檔/SVG檔路徑){fig-align="center" width="50%"} <!-- 圖片置中，寬度50% -->
+
+::: {.css_class_name}
+此區塊內容輸出會被包在HTML <div> tag 中，css_class_name 可用來指定 div tag 使用的 CSS 樣式。
+:::
+
+[此文字輸出會被包在 HTML <span> tag 中，且套用 another_css 的 CSS 樣式]{.another_css}
+
+<!-- 使用 --- 且前後都各空一行會產生水平分隔線，如下範例 -->
+
+---
+
+可使用 Pandoc 語法提供的 Footnote[^1] 功能。
+
+[^1]: 這是註腳內容，可換行，會自動編號。
+
+```
+:::
+
+除了在大括號 { }中套用定義在 CSS 檔案的 CSS 樣式外，也可直接寫`{style="..."}`來指定 tag 的 CSS inline style。
+
+此外也可在[ ***.qmd*** 文件內容中直接使用純 HTML 語法](https://quarto.org/docs/authoring/markdown-basics.html#raw-content){target="_blank"}。
+
+## 
+
+表格的語法除了原本 Markdown 的語法外，還支援 Pandoc 的表格語法，像是多行表頭、表格內換行、表格內插入圖片等功能。
