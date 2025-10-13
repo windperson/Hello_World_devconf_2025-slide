@@ -1,10 +1,5 @@
 ---
 # This page will also be include to the demo website
-format: 
-  html:
-    link-external-icon:	true
-    link-external-newwindow: true 
-
 ---
 
 ## [Quarto CLI](https://github.com/quarto-dev/quarto-cli) (Command Line Interface) 

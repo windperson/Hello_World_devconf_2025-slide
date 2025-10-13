@@ -1,4 +1,9 @@
 ---
+format:
+  html:
+    link-external-icon: true
+    link-external-newwindow: true
+
 part1_img_prefix: "/images/part01/"
 ---
 
