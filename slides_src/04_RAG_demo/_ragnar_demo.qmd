@@ -1,5 +1,11 @@
 ---
-#
+format:
+  html:
+    mermaid:
+      theme: forest
+  revealjs:
+    mermaid:
+      theme: forest
 ---
 ## What is ragnar?
 
@@ -14,9 +20,9 @@ GitHub Repo: <https://github.com/tidyverse/ragnar>
 :::
 ::::
 
-## 一個完整的 RAG 系統架構圖如下： {.small}
+## 一個完整的 RAG 系統架構圖： {.small}
 
-::: {style="overflow-y: scroll; height: 830px;"}
+:::: {style="overflow-y: scroll; height: 860px;"}
 ```{mermaid}
 flowchart TD
   %% User / Client
@@ -79,9 +85,11 @@ flowchart TD
   Monitoring -.-> VectorDB
 ```
 
+::: {.smaller}
+Ragnar 提供在 建立向量資料庫/網路資料擷取(Web Crawer)/原始資料切片/LLM介接（用 [ellmer 套件](https://ellmer.tidyverse.org/articles/programming.html)） 等等 RAG 系統所需的功能的函式庫，可讓 R 開發者快速建立 RAG App。
 :::
 
-Ragnar 提供在 建立向量資料庫/網路資料擷取(Web Crawer)/原始資料切片/LLM介接（用 [ellmer 套件](https://ellmer.tidyverse.org/articles/programming.html)） 等等 RAG 系統所需的功能的函式庫，可讓 R 開發者快速建立 RAG App。
+::::
 
 ## Ragnar 官方範例
 
@@ -103,11 +111,11 @@ Ragnar 提供在 建立向量資料庫/網路資料擷取(Web Crawer)/原始資�
 
 #### 建立向量資料庫 ([`scripts/init-quarto-web-rag.R`](https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/RAG_demo/scripts/init-quarto-web-rag-db.R){target="_blank"})
 
-抓取 Quarto 官方網站的 GitHub repo 內容，呼叫 quarto render 輸出網站的 HTML 內容，然後底層使用 [微軟的 Python markitdown 套件](https://github.com/microsoft/markitdown)將 HTML 轉換為 Markdown 內容，最後將這些 Markdown 內容切片，建立 [duckdb](https://duckdb.org/) 向量資料庫並匯入時加入實際網址對應。
+抓取 Quarto 官方網站的 GitHub repo 內容，呼叫 quarto render 輸出網站的 HTML 內容，然後呼叫[`read_as_markdown()`](https://ragnar.tidyverse.org/reference/read_as_markdown.html) （底層使用 [微軟的 Python markitdown 套件](https://github.com/microsoft/markitdown)）將 HTML 轉換為 Markdown 內容，呼叫 [`markdown_chunk()`](https://ragnar.tidyverse.org/reference/markdown_chunk.html) 將這些 Markdown 內容切片，呼叫 [`ragnar_store_create()`](https://ragnar.tidyverse.org/reference/ragnar_store_create.html) 建立 [duckdb](https://duckdb.org/) 向量資料庫並匯入 （呼叫[`ragnar_store_insert()`](https://ragnar.tidyverse.org/reference/ragnar_store_insert.html) ）時加入實際網址對應。
 
 #### 串接 LLM 和 RAG Store 產生 ellmer 查詢物件 ([`scripts/demo-quarto-web-rag.R`](https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/RAG_demo/scripts/demo-quarto-web-rag.R){target="_blank"})
 
-此 R script 檔會使用上一個 R script 建立的向量資料庫，並且串接 OpenAI REST API 相容的 LLM model 來建立一個查詢 Quarto 官方網站內容的 RAG 查詢物件。
+此 R script 檔會使用上一個 R script 建立的向量資料庫（呼叫 [`ragnar_store_connect()`](https://ragnar.tidyverse.org/reference/ragnar_store_create.html?search-input=ragnar_store_connect)），並且呼叫 [`ellmer::chat_openai()`](https://ellmer.tidyverse.org/reference/chat_openai.html) 串接 OpenAI REST API 相容的 LLM model 來建立一個查詢 Quarto 官方網站內容的 RAG 查詢物件。
 
 然後就可以使用 ellmer 套件提供的 [`live_console()`](https://ellmer.tidyverse.org/reference/live_console.html)函式來進行互動式的問答:
 

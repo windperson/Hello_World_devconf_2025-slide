@@ -159,6 +159,7 @@ Quarto 讓寫文件內容統一於 Quarto 的 Markdown 格式（***.qmd***）檔
 * [Huanlin 學習筆記blog](https://www.huanlintalk.com/search/label/Quarto)
 * [手把手教你使用 Quarto 构建文档 (1)](https://mp.weixin.qq.com/s/mLauhZ2xjLXRuSbXIXl81w)
 * [Quarto 入门教程 (1)：简单介绍和资料汇总](https://zhuanlan.zhihu.com/p/660033677)
+* [Book: R語言數據分析從入門到實踐](https://www.tenlong.com.tw/products/9787302693970)
 
 :::
 
