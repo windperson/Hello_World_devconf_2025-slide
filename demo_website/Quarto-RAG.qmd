@@ -13,20 +13,13 @@ resources:
 呼叫範例程式碼：
 
 ~~~r
-
 library(ragnar)
 library(ellmer)
 
 rag_db_path <- "quarto-web.ragnar.store"
 
-message("Open RAG store db")
 rag_store <- ragnar::ragnar_store_connect(rag_db_path, read_only = TRUE)
 
-message("Setting up LLM chat client")
-if (exists("rag_chat")) {
-  message("Removing existing rag_chat object")
-  rm(rag_chat)
-}
 rag_chat <- ellmer::chat_openai(
   model = "openai/gpt-oss-20b",
   base_url = "http://localhost:1234/v1",
