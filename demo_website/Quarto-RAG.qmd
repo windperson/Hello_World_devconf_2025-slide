@@ -9,3 +9,73 @@ resources:
 {{< asciinema "./screen_casts/create-quarto-web-rag-store.cast" cols="80" rows="15" autoPlay="true" speed="4" theme="dracula" poster="npt:1:23" >}}
 
 ## Query using LLM by ellmer package
+
+呼叫範例程式碼：
+
+~~~r
+
+library(ragnar)
+library(ellmer)
+
+rag_db_path <- "quarto-web.ragnar.store"
+
+message("Open RAG store db")
+rag_store <- ragnar::ragnar_store_connect(rag_db_path, read_only = TRUE)
+
+message("Setting up LLM chat client")
+if (exists("rag_chat")) {
+  message("Removing existing rag_chat object")
+  rm(rag_chat)
+}
+rag_chat <- ellmer::chat_openai(
+  model = "openai/gpt-oss-20b",
+  base_url = "http://localhost:1234/v1",
+  api_key = "lm-studio",
+  params = ellmer::params(
+    reasoning_effort = "medium", verbosity = "low"
+  ),
+  echo = FALSE
+)
+
+rag_chat$set_system_prompt(c(rag_chat$get_system_prompt(),
+glue::trim(
+"
+Response with the language user used in their last request, don't include useless greeting words.
+You are an expert in Quarto documentation.
+Perform searches on quarto_docs for user request before craft response,
+but DO NOT Excessive Calls Tools too many times per user request.
+Response always includes links to related official Quarto documentation links.
+If the request is ambiguous, search first, then ask a clarifying question.
+If quarto_docs are unavailable, or if search fails, or if it does not contain an answer to the question,
+Inform the user and do NOT answer the question.
+Give concise answers but include minimal self-contained Quarto document examples,
+Prefer using more valid Quarto markdown syntax (.qmd) , Less HTML, CSS those pure web technology syntax as possible.
+And when it needs to display Quarto code blocks, use oversized markdown fences, like follows:
+
+````` markdown
+PROSE HERE
+
+````
+```r 
+CODE HERE
+```
+````
+
+````
+```python
+CODE HERE
+````
+```
+
+`````
+"
+)))
+
+ragnar::ragnar_register_tool_retrieve(rag_chat, rag_store,
+  store_description = "quarto_docs"
+)
+
+live_console(rag_chat)
+~~~
+
+---
