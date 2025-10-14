@@ -732,9 +732,9 @@ format: html
 <p><img data-src="04_RAG_demo/pics/ragnar_icon.png"></p>
 </div></div>
 </section>
-<section id="一個完整的-rag-系統架構圖如下" class="slide level2 small">
-<h2>一個完整的 RAG 系統架構圖如下：</h2>
-<div style="overflow-y: scroll; height: 830px;">
+<section id="一個完整的-rag-系統架構圖" class="slide level2 small">
+<h2>一個完整的 RAG 系統架構圖：</h2>
+<div style="overflow-y: scroll; height: 860px;">
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -805,8 +805,10 @@ format: html
 </div>
 </div>
 </div>
-</div>
+<div class="smaller">
 <p>Ragnar 提供在 建立向量資料庫/網路資料擷取(Web Crawer)/原始資料切片/LLM介接（用 <a href="https://ellmer.tidyverse.org/articles/programming.html">ellmer 套件</a>） 等等 RAG 系統所需的功能的函式庫，可讓 R 開發者快速建立 RAG App。</p>
+</div>
+</div>
 </section>
 <section id="ragnar-官方範例" class="slide level2">
 <h2>Ragnar 官方範例</h2>
@@ -822,9 +824,9 @@ format: html
 <p>原始碼在 GitHub：<br> <a href="https://github.com/windperson/Hello_World_devconf_2025-slide/tree/main/RAG_demo" class="uri">https://github.com/windperson/Hello_World_devconf_2025-slide/tree/main/RAG_demo</a></p>
 <h3 id="原始碼解說">原始碼解說</h3>
 <h4 id="建立向量資料庫-scriptsinit-quarto-web-rag.r">建立向量資料庫 (<a href="https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/RAG_demo/scripts/init-quarto-web-rag-db.R" target="_blank"><code>scripts/init-quarto-web-rag.R</code></a>)</h4>
-<p>抓取 Quarto 官方網站的 GitHub repo 內容，呼叫 quarto render 輸出網站的 HTML 內容，然後底層使用 <a href="https://github.com/microsoft/markitdown">微軟的 Python markitdown 套件</a>將 HTML 轉換為 Markdown 內容，最後將這些 Markdown 內容切片，建立 <a href="https://duckdb.org/">duckdb</a> 向量資料庫並匯入時加入實際網址對應。</p>
+<p>抓取 Quarto 官方網站的 GitHub repo 內容，呼叫 quarto render 輸出網站的 HTML 內容，然後呼叫<a href="https://ragnar.tidyverse.org/reference/read_as_markdown.html"><code>read_as_markdown()</code></a> （底層使用 <a href="https://github.com/microsoft/markitdown">微軟的 Python markitdown 套件</a>）將 HTML 轉換為 Markdown 內容，呼叫 <a href="https://ragnar.tidyverse.org/reference/markdown_chunk.html"><code>markdown_chunk()</code></a> 將這些 Markdown 內容切片，呼叫 <a href="https://ragnar.tidyverse.org/reference/ragnar_store_create.html"><code>ragnar_store_create()</code></a> 建立 <a href="https://duckdb.org/">duckdb</a> 向量資料庫並匯入 （呼叫<a href="https://ragnar.tidyverse.org/reference/ragnar_store_insert.html"><code>ragnar_store_insert()</code></a> ）時加入實際網址對應。</p>
 <h4 id="串接-llm-和-rag-store-產生-ellmer-查詢物件-scriptsdemo-quarto-web-rag.r">串接 LLM 和 RAG Store 產生 ellmer 查詢物件 (<a href="https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/RAG_demo/scripts/demo-quarto-web-rag.R" target="_blank"><code>scripts/demo-quarto-web-rag.R</code></a>)</h4>
-<p>此 R script 檔會使用上一個 R script 建立的向量資料庫，並且串接 OpenAI REST API 相容的 LLM model 來建立一個查詢 Quarto 官方網站內容的 RAG 查詢物件。</p>
+<p>此 R script 檔會使用上一個 R script 建立的向量資料庫（呼叫 <a href="https://ragnar.tidyverse.org/reference/ragnar_store_create.html?search-input=ragnar_store_connect"><code>ragnar_store_connect()</code></a>），並且呼叫 <a href="https://ellmer.tidyverse.org/reference/chat_openai.html"><code>ellmer::chat_openai()</code></a> 串接 OpenAI REST API 相容的 LLM model 來建立一個查詢 Quarto 官方網站內容的 RAG 查詢物件。</p>
 <p>然後就可以使用 ellmer 套件提供的 <a href="https://ellmer.tidyverse.org/reference/live_console.html"><code>live_console()</code></a>函式來進行互動式的問答:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -845,6 +847,7 @@ format: html
 <li><a href="https://www.huanlintalk.com/search/label/Quarto">Huanlin 學習筆記blog</a></li>
 <li><a href="https://mp.weixin.qq.com/s/mLauhZ2xjLXRuSbXIXl81w">手把手教你使用 Quarto 构建文档 (1)</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/660033677">Quarto 入门教程 (1)：简单介绍和资料汇总</a></li>
+<li><a href="https://www.tenlong.com.tw/products/9787302693970">Book: R語言數據分析從入門到實踐</a></li>
 </ul>
 </div>
 </section>
