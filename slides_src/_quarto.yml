@@ -10,3 +10,4 @@ profile:
 part1_img_prefix: "./01_Tool_Setup/"
 part2_img_prefix: "./02_Quarto_Tips/"
 part3_img_prefix: "./03_GitHub_Pages_Publish/"
+part4_img_prefix: "./04_RAG_demo/"

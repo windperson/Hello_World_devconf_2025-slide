@@ -1,0 +1,114 @@
+---
+#
+---
+## What is ragnar?
+
+Ragnar is an open-source (MIT license) R package that provides tools for building Retrieval-Augmented Generation (RAG) systems. RAG systems combine the capabilities of large language models (LLMs) with external knowledge sources to enhance the quality and relevance of generated content.
+
+:::: {.columns}
+::: {.column width="60%"}
+GitHub Repo: <https://github.com/tidyverse/ragnar>
+:::
+::: {.column width="40%"}
+![]({{< meta part4_img_prefix >}}pics/ragnar_icon.png)
+:::
+::::
+
+## 一個完整的 RAG 系統架構圖如下： {.small}
+
+::: {style="overflow-y: scroll; height: 830px;"}
+```{mermaid}
+flowchart TD
+  %% User / Client
+  subgraph UserClient["User / Client"]
+    U["User"]
+    App["Application / UI"]
+  end
+
+  U -->|ask question / prompt| App
+  App -->|query| Q["Query Processor"]
+
+  %% Online retrieval + generation
+  subgraph Online["Online: Retrieval & Generation"]
+    direction TB
+    Q --> QE["Query Encoder / Embedding Model"]
+    Q -->|optional textual search| BM25["BM25 / Lexical Search"]
+    QE -->|query vector| VectorDB["Vector DB"]
+    BM25 --> Hybrid["Hybrid Retriever (bm25 + dense)"]
+    VectorDB --> Hybrid
+    Hybrid --> TopK["Top-K Candidates"]
+    TopK --> Reranker["Cross-Encoder Reranker"]
+    Reranker --> ContextAssembler["Context Assembler\n(filter, dedupe, length budget)"]
+    ContextAssembler --> PromptBuilder["Prompt Builder / Template"]
+    PromptBuilder --> LLM["LLM (Reader / Generator)"]
+    LLM -->|answer| AppResponse["Formatted Response"]
+    AppResponse --> App
+  end
+
+  %% Offline ingestion & indexing
+  subgraph Offline["Offline: Ingestion & Indexing"]
+    direction TB
+    Sources["Data Sources"] --> Chunker["Chunker & Preprocessor\n(clean, OCR, lang-detect)"]
+    Chunker --> EmbeddingModel["Embedding Model\n(SBERT, text-embedding-3)"]
+    EmbeddingModel --> VectorDB
+    Chunker --> MetadataStore["(Metadata Store / DB)"]
+    MetadataStore --> VectorDB
+    Chunker --> Indexer["Indexing Scheduler & Updater"]
+    Indexer --> VectorDB
+  end
+
+  %% Supporting infra
+  subgraph Support["Supporting Services"]
+    direction TB
+    Cache["Result & Embedding Cache"]
+    Auth["Auth (Rate-limits, RBAC)"]
+    Monitoring["Monitoring (Logging, Metrics, Tracing)"]
+    Feedback["User Feedback / Clicks"]
+    Tools["External Tools / APIs"]
+  end
+
+  %% Connections to supporting infra
+  TopK --> Cache
+  Cache --> ContextAssembler
+  App --> Feedback
+  Feedback --> Indexer
+  LLM --> Tools
+  App --> Auth
+  Monitoring -.-> App
+  Monitoring -.-> LLM
+  Monitoring -.-> VectorDB
+```
+
+:::
+
+Ragnar 提供在 建立向量資料庫/網路資料擷取(Web Crawer)/原始資料切片/LLM介接（用 [ellmer 套件](https://ellmer.tidyverse.org/articles/programming.html)） 等等 RAG 系統所需的功能的函式庫，可讓 R 開發者快速建立 RAG App。
+
+## Ragnar 官方範例
+
+官方有一個查詢 Quarto 網站文件內容的 RAG 範例網站專案：**quartohelp**<br/> <https://github.com/t-kalinowski/quartohelp>
+
+::: {.smaller .text-center}
+使用 [Shiny (web framework)](https://shiny.posit.co/) + Ragnar 打造的 Quarto 官方文件查詢網站
+:::
+
+![]({{< meta part4_img_prefix >}}pics/quartohelp_screenshot.png){fig-align="center"}
+
+## Ragnar 官方範例的簡化版 Demo {.smaller .scrollable}
+
+由於官方範例專案構造複雜，所以就改寫成只用兩個 R script 檔示範如何使用 ragnar 套件基本 RAG LLM AI 串接。
+
+原始碼在 GitHub：<br/> <https://github.com/windperson/Hello_World_devconf_2025-slide/tree/main/RAG_demo>
+
+### 原始碼解說
+
+#### 建立向量資料庫 ([`scripts/init-quarto-web-rag.R`](https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/RAG_demo/scripts/init-quarto-web-rag-db.R){target="_blank"})
+
+抓取 Quarto 官方網站的 GitHub repo 內容，呼叫 quarto render 輸出網站的 HTML 內容，然後底層使用 [微軟的 Python markitdown 套件](https://github.com/microsoft/markitdown)將 HTML 轉換為 Markdown 內容，最後將這些 Markdown 內容切片，建立 [duckdb](https://duckdb.org/) 向量資料庫並匯入時加入實際網址對應。
+
+#### 串接 LLM 和 RAG Store 產生 ellmer 查詢物件 ([`scripts/demo-quarto-web-rag.R`](https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/RAG_demo/scripts/demo-quarto-web-rag.R){target="_blank"})
+
+此 R script 檔會使用上一個 R script 建立的向量資料庫，並且串接 OpenAI REST API 相容的 LLM model 來建立一個查詢 Quarto 官方網站內容的 RAG 查詢物件。
+
+然後就可以使用 ellmer 套件提供的 [`live_console()`](https://ellmer.tidyverse.org/reference/live_console.html)函式來進行互動式的問答:
+
+![]({{< meta part4_img_prefix >}}pics/quarto_rag_example_query.png){height="100%" fig-align="center"}

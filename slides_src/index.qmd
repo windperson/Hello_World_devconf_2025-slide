@@ -144,6 +144,24 @@ Quarto 讓寫文件內容統一於 Quarto 的 Markdown 格式（***.qmd***）檔
 
 # RAGNAR套件打造自己的RAG AI知識庫檢索系統
 
+{{< include "04_RAG_demo/_ragnar_demo.qmd" >}}
+
+# 參考資料🏫{.smallest}
+
+::: {style="overflow-y: scroll; height: 860px;"}
+
+* [Quarto 官方網站](https://quarto.org/)
+* [R Quick Guide](https://www.tutorialspoint.com/r/r_quick_guide.htm)
+* [R Tutorial](https://www.tutorialspoint.com/r/index.htm)
+* [ragnar 套件](https://ragnar.tidyverse.org/articles/ragnar.html)
+* [ellmer 套件](https://ellmer.tidyverse.org/index.html)
+* [Miniconda in WSL](https://dev.to/sfpear/miniconda-in-wsl-3642)
+* [Huanlin 學習筆記blog](https://www.huanlintalk.com/search/label/Quarto)
+* [手把手教你使用 Quarto 构建文档 (1)](https://mp.weixin.qq.com/s/mLauhZ2xjLXRuSbXIXl81w)
+* [Quarto 入门教程 (1)：简单介绍和资料汇总](https://zhuanlan.zhihu.com/p/660033677)
+
+:::
+
 # Q & A
 
 :::: {.columns}
