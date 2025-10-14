@@ -188,6 +188,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="index_files/libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="index_files/libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="index_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
   <style>
   .center-xy {
   margin: 0;
@@ -714,9 +717,136 @@ format: html
 <span id="cb9-12"><a href=""></a><span class="at">     </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ul>
 </section></section>
+<section>
 <section id="ragnar套件打造自己的rag-ai知識庫檢索系統" class="title-slide slide level1 center">
 <h1>RAGNAR套件打造自己的RAG AI知識庫檢索系統</h1>
 
+</section>
+<section id="what-is-ragnar" class="slide level2">
+<h2>What is ragnar?</h2>
+<p>Ragnar is an open-source (MIT license) R package that provides tools for building Retrieval-Augmented Generation (RAG) systems. RAG systems combine the capabilities of large language models (LLMs) with external knowledge sources to enhance the quality and relevance of generated content.</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>GitHub Repo: <a href="https://github.com/tidyverse/ragnar" class="uri">https://github.com/tidyverse/ragnar</a></p>
+</div><div class="column" style="width:40%;">
+<p><img data-src="04_RAG_demo/pics/ragnar_icon.png"></p>
+</div></div>
+</section>
+<section id="一個完整的-rag-系統架構圖如下" class="slide level2 small">
+<h2>一個完整的 RAG 系統架構圖如下：</h2>
+<div style="overflow-y: scroll; height: 830px;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  %% User / Client
+  subgraph UserClient["User / Client"]
+    U["User"]
+    App["Application / UI"]
+  end
+
+  U --&gt;|ask question / prompt| App
+  App --&gt;|query| Q["Query Processor"]
+
+  %% Online retrieval + generation
+  subgraph Online["Online: Retrieval &amp; Generation"]
+    direction TB
+    Q --&gt; QE["Query Encoder / Embedding Model"]
+    Q --&gt;|optional textual search| BM25["BM25 / Lexical Search"]
+    QE --&gt;|query vector| VectorDB["Vector DB"]
+    BM25 --&gt; Hybrid["Hybrid Retriever (bm25 + dense)"]
+    VectorDB --&gt; Hybrid
+    Hybrid --&gt; TopK["Top-K Candidates"]
+    TopK --&gt; Reranker["Cross-Encoder Reranker"]
+    Reranker --&gt; ContextAssembler["Context Assembler\n(filter, dedupe, length budget)"]
+    ContextAssembler --&gt; PromptBuilder["Prompt Builder / Template"]
+    PromptBuilder --&gt; LLM["LLM (Reader / Generator)"]
+    LLM --&gt;|answer| AppResponse["Formatted Response"]
+    AppResponse --&gt; App
+  end
+
+  %% Offline ingestion &amp; indexing
+  subgraph Offline["Offline: Ingestion &amp; Indexing"]
+    direction TB
+    Sources["Data Sources"] --&gt; Chunker["Chunker &amp; Preprocessor\n(clean, OCR, lang-detect)"]
+    Chunker --&gt; EmbeddingModel["Embedding Model\n(SBERT, text-embedding-3)"]
+    EmbeddingModel --&gt; VectorDB
+    Chunker --&gt; MetadataStore["(Metadata Store / DB)"]
+    MetadataStore --&gt; VectorDB
+    Chunker --&gt; Indexer["Indexing Scheduler &amp; Updater"]
+    Indexer --&gt; VectorDB
+  end
+
+  %% Supporting infra
+  subgraph Support["Supporting Services"]
+    direction TB
+    Cache["Result &amp; Embedding Cache"]
+    Auth["Auth (Rate-limits, RBAC)"]
+    Monitoring["Monitoring (Logging, Metrics, Tracing)"]
+    Feedback["User Feedback / Clicks"]
+    Tools["External Tools / APIs"]
+  end
+
+  %% Connections to supporting infra
+  TopK --&gt; Cache
+  Cache --&gt; ContextAssembler
+  App --&gt; Feedback
+  Feedback --&gt; Indexer
+  LLM --&gt; Tools
+  App --&gt; Auth
+  Monitoring -.-&gt; App
+  Monitoring -.-&gt; LLM
+  Monitoring -.-&gt; VectorDB
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<p>Ragnar 提供在 建立向量資料庫/網路資料擷取(Web Crawer)/原始資料切片/LLM介接（用 <a href="https://ellmer.tidyverse.org/articles/programming.html">ellmer 套件</a>） 等等 RAG 系統所需的功能的函式庫，可讓 R 開發者快速建立 RAG App。</p>
+</section>
+<section id="ragnar-官方範例" class="slide level2">
+<h2>Ragnar 官方範例</h2>
+<p>官方有一個查詢 Quarto 網站文件內容的 RAG 範例網站專案：<strong>quartohelp</strong><br> <a href="https://github.com/t-kalinowski/quartohelp" class="uri">https://github.com/t-kalinowski/quartohelp</a></p>
+<div class="smaller text-center">
+<p>使用 <a href="https://shiny.posit.co/">Shiny (web framework)</a> + Ragnar 打造的 Quarto 官方文件查詢網站</p>
+</div>
+
+<img data-src="04_RAG_demo/pics/quartohelp_screenshot.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="ragnar-官方範例的簡化版-demo" class="slide level2 smaller scrollable">
+<h2>Ragnar 官方範例的簡化版 Demo</h2>
+<p>由於官方範例專案構造複雜，所以就改寫成只用兩個 R script 檔示範如何使用 ragnar 套件基本 RAG LLM AI 串接。</p>
+<p>原始碼在 GitHub：<br> <a href="https://github.com/windperson/Hello_World_devconf_2025-slide/tree/main/RAG_demo" class="uri">https://github.com/windperson/Hello_World_devconf_2025-slide/tree/main/RAG_demo</a></p>
+<h3 id="原始碼解說">原始碼解說</h3>
+<h4 id="建立向量資料庫-scriptsinit-quarto-web-rag.r">建立向量資料庫 (<a href="https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/RAG_demo/scripts/init-quarto-web-rag-db.R" target="_blank"><code>scripts/init-quarto-web-rag.R</code></a>)</h4>
+<p>抓取 Quarto 官方網站的 GitHub repo 內容，呼叫 quarto render 輸出網站的 HTML 內容，然後底層使用 <a href="https://github.com/microsoft/markitdown">微軟的 Python markitdown 套件</a>將 HTML 轉換為 Markdown 內容，最後將這些 Markdown 內容切片，建立 <a href="https://duckdb.org/">duckdb</a> 向量資料庫並匯入時加入實際網址對應。</p>
+<h4 id="串接-llm-和-rag-store-產生-ellmer-查詢物件-scriptsdemo-quarto-web-rag.r">串接 LLM 和 RAG Store 產生 ellmer 查詢物件 (<a href="https://github.com/windperson/Hello_World_devconf_2025-slide/blob/main/RAG_demo/scripts/demo-quarto-web-rag.R" target="_blank"><code>scripts/demo-quarto-web-rag.R</code></a>)</h4>
+<p>此 R script 檔會使用上一個 R script 建立的向量資料庫，並且串接 OpenAI REST API 相容的 LLM model 來建立一個查詢 Quarto 官方網站內容的 RAG 查詢物件。</p>
+<p>然後就可以使用 ellmer 套件提供的 <a href="https://ellmer.tidyverse.org/reference/live_console.html"><code>live_console()</code></a>函式來進行互動式的問答:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="04_RAG_demo/pics/quarto_rag_example_query.png" class="quarto-figure quarto-figure-center" style="height:100.0%"></p>
+</figure>
+</div>
+</section></section>
+<section id="參考資料" class="title-slide slide level1 smallest center">
+<h1>參考資料🏫</h1>
+<div style="overflow-y: scroll; height: 860px;">
+<ul>
+<li><a href="https://quarto.org/">Quarto 官方網站</a></li>
+<li><a href="https://www.tutorialspoint.com/r/r_quick_guide.htm">R Quick Guide</a></li>
+<li><a href="https://www.tutorialspoint.com/r/index.htm">R Tutorial</a></li>
+<li><a href="https://ragnar.tidyverse.org/articles/ragnar.html">ragnar 套件</a></li>
+<li><a href="https://ellmer.tidyverse.org/index.html">ellmer 套件</a></li>
+<li><a href="https://dev.to/sfpear/miniconda-in-wsl-3642">Miniconda in WSL</a></li>
+<li><a href="https://www.huanlintalk.com/search/label/Quarto">Huanlin 學習筆記blog</a></li>
+<li><a href="https://mp.weixin.qq.com/s/mLauhZ2xjLXRuSbXIXl81w">手把手教你使用 Quarto 构建文档 (1)</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/660033677">Quarto 入门教程 (1)：简单介绍和资料汇总</a></li>
+</ul>
+</div>
 </section>
 
 <section id="q-a" class="title-slide slide level1 center">
