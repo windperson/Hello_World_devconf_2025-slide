@@ -1,11 +1,5 @@
 ---
-format:
-  html:
-    mermaid:
-      theme: forest
-  revealjs:
-    mermaid:
-      theme: forest
+#
 ---
 ## What is ragnar?
 

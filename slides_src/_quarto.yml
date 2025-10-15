@@ -6,6 +6,14 @@ project:
 profile:
   default: webslide
 
+format:
+  html:
+    mermaid:
+      theme: forest
+  revealjs:
+    mermaid:
+      theme: forest
+
 # picture url prefix
 part1_img_prefix: "./01_Tool_Setup/"
 part2_img_prefix: "./02_Quarto_Tips/"
