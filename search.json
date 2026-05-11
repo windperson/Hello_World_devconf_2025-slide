@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "Quarto-RAG.html#query-using-llm-by-ellmer-package",
-    "href": "Quarto-RAG.html#query-using-llm-by-ellmer-package",
-    "title": "Quarto Website RAG Demo",
-    "section": "Query using LLM by ellmer package",
-    "text": "Query using LLM by ellmer package\n呼叫範例程式碼：\nlibrary(ragnar)\nlibrary(ellmer)\n\nrag_db_path &lt;- \"quarto-web.ragnar.store\"\n\nrag_store &lt;- ragnar::ragnar_store_connect(rag_db_path, read_only = TRUE)\n\nrag_chat &lt;- ellmer::chat_openai(\n  model = \"openai/gpt-oss-20b\",\n  base_url = \"http://localhost:1234/v1\",\n  api_key = \"lm-studio\",\n  params = ellmer::params(\n    reasoning_effort = \"medium\", verbosity = \"low\"\n  ),\n  echo = FALSE\n)\n\nrag_chat$set_system_prompt(c(rag_chat$get_system_prompt(),\nglue::trim(\n\"\nResponse with the language user used in their last request, don't include useless greeting words.\nYou are an expert in Quarto documentation.\nPerform searches on quarto_docs for user request before craft response,\nbut DO NOT Excessive Calls Tools too many times per user request.\nResponse always includes links to related official Quarto documentation links.\nIf the request is ambiguous, search first, then ask a clarifying question.\nIf quarto_docs are unavailable, or if search fails, or if it does not contain an answer to the question,\nInform the user and do NOT answer the question.\nGive concise answers but include minimal self-contained Quarto document examples,\nPrefer using more valid Quarto markdown syntax (.qmd) , Less HTML, CSS those pure web technology syntax as possible.\nAnd when it needs to display Quarto code blocks, use oversized markdown fences, like follows:\n\n````` markdown\nPROSE HERE\n\n````\n```r \nCODE HERE\n```\n````\n\n````\n```python\nCODE HERE\n````\n```\n\n`````\n\"\n)))\n\nragnar::ragnar_register_tool_retrieve(rag_chat, rag_store,\n  store_description = \"quarto_docs\"\n)\n\nlive_console(rag_chat)"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Hello World devconf 2025",
@@ -40,5 +33,19 @@
     "title": "Hello World devconf 2025",
     "section": "一些額外工具/設定建議",
     "text": "一些額外工具/設定建議\n\n如有在文件內容使用 Jupyter Notebook (Python/R/Julia) Code Cell 功能，參閱 github 說明文件安裝對應的 Python/R/Julia 擴充套件。\n由於 markdown(.md)/quarto(.qmd) 文件中不少格式都是靠 Indent 幾個空白(space)字元來達成效果，建議修改 VSCode 的 Indentation 設定，如此按下 tab 鍵時就會插入2個空白字元，而不是插入一個 tab 字元。\n可安裝 VSCode 的 Vim 擴充套件和 NeoVim 在 VSCode 使用 Vim，打字更有效率。"
+  },
+  {
+    "objectID": "Quarto-RAG.html#create-rag-store-of-quarto-website",
+    "href": "Quarto-RAG.html#create-rag-store-of-quarto-website",
+    "title": "Quarto Website RAG Demo",
+    "section": "Create RAG Store of Quarto Website",
+    "text": "Create RAG Store of Quarto Website"
+  },
+  {
+    "objectID": "Quarto-RAG.html#query-using-llm-by-ellmer-package",
+    "href": "Quarto-RAG.html#query-using-llm-by-ellmer-package",
+    "title": "Quarto Website RAG Demo",
+    "section": "Query using LLM by ellmer package",
+    "text": "Query using LLM by ellmer package\n呼叫範例程式碼：\nlibrary(ragnar)\nlibrary(ellmer)\n\nrag_db_path &lt;- \"quarto-web.ragnar.store\"\n\nrag_store &lt;- ragnar::ragnar_store_connect(rag_db_path, read_only = TRUE)\n\nrag_chat &lt;- ellmer::chat_openai(\n  model = \"openai/gpt-oss-20b\",\n  base_url = \"http://localhost:1234/v1\",\n  api_key = \"lm-studio\",\n  params = ellmer::params(\n    reasoning_effort = \"medium\", verbosity = \"low\"\n  ),\n  echo = FALSE\n)\n\nrag_chat$set_system_prompt(c(rag_chat$get_system_prompt(),\nglue::trim(\n\"\nResponse with the language user used in their last request, don't include useless greeting words.\nYou are an expert in Quarto documentation.\nPerform searches on quarto_docs for user request before craft response,\nbut DO NOT Excessive Calls Tools too many times per user request.\nResponse always includes links to related official Quarto documentation links.\nIf the request is ambiguous, search first, then ask a clarifying question.\nIf quarto_docs are unavailable, or if search fails, or if it does not contain an answer to the question,\nInform the user and do NOT answer the question.\nGive concise answers but include minimal self-contained Quarto document examples,\nPrefer using more valid Quarto markdown syntax (.qmd) , Less HTML, CSS those pure web technology syntax as possible.\nAnd when it needs to display Quarto code blocks, use oversized markdown fences, like follows:\n\n````` markdown\nPROSE HERE\n\n````\n```r \nCODE HERE\n```\n````\n\n````\n```python\nCODE HERE\n````\n```\n\n`````\n\"\n)))\n\nragnar::ragnar_register_tool_retrieve(rag_chat, rag_store,\n  store_description = \"quarto_docs\"\n)\n\nlive_console(rag_chat)"
   }
 ]
