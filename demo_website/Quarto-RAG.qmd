@@ -4,6 +4,10 @@ resources:
   - screen_casts/create-quarto-web-rag-store.cast
 ---
 
+## RAG System Architecture
+
+![](./images/quarto_website_rag_flow.gif)
+
 ## Create RAG Store of Quarto Website
 
 {{< asciinema "./screen_casts/create-quarto-web-rag-store.cast" cols="80" rows="15" autoPlay="true" speed="4" theme="dracula" poster="npt:1:23" >}}
